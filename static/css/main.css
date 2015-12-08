@@ -1,0 +1,115 @@
+body {
+    background: rgb(34, 43, 54);
+    color: lightgray;
+    font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+}
+
+a {
+    color: rgb(34, 43, 54);
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:focus {
+    text-decoration: none;
+}
+
+h2, h4 {
+    margin: 0;
+}
+
+.list-group-item:first-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.list-group-item:last-child {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.list-group-item {
+    background: rgb(29, 36, 43);
+    border: 1px rgb(26, 31, 39) solid;
+}
+
+.list-group > a:hover {
+    background: rgb(34, 43, 54);
+    color: white;
+}
+
+.list-group > a:focus {
+    background: rgb(34, 43, 54);
+}
+
+.header {
+    padding: 15px 0;
+}
+
+#navbar {
+    background: rgb(26, 31, 39);
+}
+
+#primary {
+    background: rgb(231, 230, 213);
+    border-radius: 5px;
+    -webkit-box-shadow: #666 0px 0px 10px;
+    -moz-box-shadow: #666 0px 0px 10px;
+    box-shadow: #666 0px 0px 10px;
+    color: black;
+}
+
+.title {
+    margin: 15px 0;
+}
+
+.media-body {
+    padding-bottom: 10px;
+    border-bottom: 1px dashed darkgrey;
+}
+
+.postDate {
+    color: darkgrey;
+    font-size: small;
+    font-style: italic;
+}
+
+.reading {
+    border-bottom: 1px dotted;
+    margin: 20px 0;
+}
+
+.panel {
+    background: rgb(34, 43, 54);
+    margin: 0;
+}
+
+.panel-heading {
+    padding: 10px 15px 10px 0px;
+    border-bottom: 1px dashed darkgray;
+}
+
+.panel-body {
+    border-bottom: 1px dashed darkgray;
+    margin-bottom: 25px;
+}
+
+.category {
+    padding: 0;
+}
+
+.category > li {
+    padding: 5px;
+}
+
+.category > li > a {
+    color: lightgray;
+}
+
+.category > li > a:hover {
+    color: white;
+}
+
+
