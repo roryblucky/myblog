@@ -35,6 +35,10 @@ h2, h4 {
     border: 1px rgb(26, 31, 39) solid;
 }
 
+.list-group {
+    margin: 0;
+}
+
 .list-group > a:hover {
     background: rgb(34, 43, 54);
     color: white;
@@ -45,7 +49,7 @@ h2, h4 {
 }
 
 .header {
-    padding: 15px 0;
+    padding: 20px 0;
 }
 
 #navbar {
@@ -112,4 +116,36 @@ h2, h4 {
     color: white;
 }
 
+.pager {
+    margin: 45px 0 0 0;
+}
+
+.pager li > a {
+    background: rgb(26, 31, 39);
+    border-radius: 0;
+    border: none;
+    color: darkgray;
+}
+
+.pager li > a:hover {
+    background: rgb(34, 43, 54);
+    color: white;
+}
+
+.pager li > a:focus {
+    background: rgb(34, 43, 54);
+    color: white;
+}
+
+.pager li:first-child > a {
+    border-top-left-radius: 5px;
+}
+
+.pager li:last-child > a {
+    border-top-right-radius: 5px;
+}
+
+.footer {
+    margin-top: 40px;
+}
 
