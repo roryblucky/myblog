@@ -35,10 +35,7 @@ type (
 )
 
 func init() {
-	//TODO TBD 初始化时不知道到底删不删数据库
 	orm.RegisterDataBase("default", "sqlite3", "../data/myblog.db")
 
 	orm.RegisterModel(new(Article), new(BlogOwner), new(Category), new(Comment))
-
-	orm.RunSyncdb("default", false, true)
 }
