@@ -8,7 +8,7 @@ import (
 
 type (
 	Article struct {
-		Id       int64      // 主键id
+		Id       int64      `orm:"pk"`                      // 主键id
 		Title    string     `orm:"size(200)"`               // 文章标题
 		PostDate time.Time  `orm:"auto_now_add;type(date)"` // 发布时间
 		Content  string     `orm:"type(text)"`              // 文章内容
@@ -17,19 +17,19 @@ type (
 	}
 
 	BlogOwner struct {
-		Id            int64  //主键id
+		Id            int64  `orm:"pk"`        //主键id
 		ImageIconPath string `orm:"size(100)"` //照片
 		Introduction  string `orm:"size(200)"` //自我介绍
 	}
 
 	Category struct {
-		Id   int64  //主键id
+		Id   int64  `orm:"pk"`       //主键id
 		Name string `orm:"size(50)"` //分类名称
 	}
 
 	Comment struct {
-		Id      int64    //主键id
-		Content string   `orm:type(text)` //评论内容
+		Id      int64    `orm:"pk"`         //主键id
+		Content string   `orm:"type(text)"` //评论内容
 		Article *Article `orm:"rel(fk)"`
 	}
 )

@@ -49,7 +49,7 @@ func TestCreateDB(t *testing.T) {
 	`
 
 	table_comment := `
-	CREATE TABLE comments(
+	CREATE TABLE comment(
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		Content text NOT NULL,
 		article_id INTEGER,
