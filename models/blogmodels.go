@@ -23,8 +23,9 @@ type (
 	}
 
 	Category struct {
-		Id   int64  `orm:"pk"`       //主键id
-		Name string `orm:"size(50)"` //分类名称
+		Id       int64      `orm:"pk"`       //主键id
+		Name     string     `orm:"size(50)"` //分类名称
+		Articles []*Article `orm:"reverse(many)"`
 	}
 
 	Comment struct {

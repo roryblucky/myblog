@@ -5,26 +5,11 @@ import (
 )
 
 type Service struct {
-	orm orm.Ormer
+	orm.Ormer
 }
 
-func NewService() (s *Service) {
-	s = &Service{orm.NewOrm()}
-	return
+func NewService() *Service {
+	return &Service{orm.NewOrm()}
 }
 
-func (this *Service) Add(i interface{}) (int64, error) {
-	return this.orm.Insert(i)
-}
-
-func (this *Service) Remove(i interface{}) (int64, error) {
-	return this.orm.Delete(i)
-}
-
-func (this *Service) Update(i interface{}, params ...string) (int64, error) {
-	return this.orm.Update(i, params...)
-}
-
-func (this *Service) Read(i interface{}, params ...string) error {
-	return this.orm.Read(i, params...)
-}
+//TODO 分页查询所需方法
