@@ -1,42 +1,34 @@
 package models
 
 import (
-	"github.com/astaxie/beego/orm"
 	_ "github.com/mattn/go-sqlite3"
 	"time"
 )
 
 type (
 	Article struct {
-		Id       int64      `orm:"pk"`                      // 主键id
-		Title    string     `orm:"size(200)"`               // 文章标题
-		PostDate time.Time  `orm:"auto_now_add;type(date)"` // 发布时间
-		Content  string     `orm:"type(text)"`              // 文章内容
-		Category *Category  `orm:"rel(fk)"`                 //分类id
-		Comments []*Comment `orm:"reverse(many)"`           //评论
+		ID       int        // 主键id
+		Title    string     // 文章标题
+		PostDate time.Time  // 发布时间
+		Content  string     // 文章内容
+		Category *Category  //分类id
+		Comments []*Comment //评论
 	}
 
 	BlogOwner struct {
-		Id            int64  `orm:"pk"`        //主键id
-		ImageIconPath string `orm:"size(100)"` //照片
-		Introduction  string `orm:"size(200)"` //自我介绍
+		ID            int    //主键id
+		ImageIconPath string //照片
+		Introduction  string //自我介绍
 	}
 
 	Category struct {
-		Id       int64      `orm:"pk"`       //主键id
-		Name     string     `orm:"size(50)"` //分类名称
-		Articles []*Article `orm:"reverse(many)"`
+		ID       int    //主键id
+		Name     string //分类名称
+		Articles []*Article
 	}
 
 	Comment struct {
-		Id      int64    `orm:"pk"`         //主键id
-		Content string   `orm:"type(text)"` //评论内容
-		Article *Article `orm:"rel(fk)"`
+		ID      int    //主键id
+		Content string //评论内容
 	}
 )
-
-func init() {
-	orm.RegisterDataBase("default", "sqlite3", "../data/myblog.db")
-
-	orm.RegisterModel(new(Article), new(BlogOwner), new(Category), new(Comment))
-}

@@ -10,12 +10,12 @@ import (
 
 func TestCreateDB(t *testing.T) {
 	// 用来创建数据库
-	_, err := os.OpenFile("../data/myblog.db", os.O_CREATE, 0666)
+	_, err := os.OpenFile("../myblog.db", os.O_CREATE, 0666)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
 
-	db, err := sql.Open("sqlite3", "../data/myblog.db")
+	db, err := sql.Open("sqlite3", "../myblog.db")
 
 	if err != nil {
 		fmt.Println(err.Error())
