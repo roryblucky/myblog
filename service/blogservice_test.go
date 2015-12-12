@@ -1,7 +1,6 @@
 package services
 
 import (
-	"log"
 	"myblog/models"
 	"testing"
 )
@@ -50,7 +49,7 @@ func TestFindPageRecords(t *testing.T) {
 
 	for i := page.Records.Front(); i != nil; i = i.Next() {
 		if v, ok := i.Value.(models.BlogOwner); ok {
-			if models.BlogOwner(v).Introduction != "this is the test3" {
+			if v.Introduction != "this is the test3" {
 				t.Fail()
 			}
 		}
