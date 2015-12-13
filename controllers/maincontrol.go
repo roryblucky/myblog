@@ -22,8 +22,6 @@ func (c *MainController) Get() {
 	categories := []models.Category{}
 	s.Find(&categories)
 
-	fmt.Println(categories)
-
 	//文章
 	result := s.FindPageRecords("1", &models.Article{})
 	if a, ok := result.([]models.Article); ok {
