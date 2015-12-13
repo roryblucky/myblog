@@ -1,7 +1,10 @@
 package models
 
 import (
+	"github.com/astaxie/beego"
+	"github.com/jinzhu/gorm"
 	_ "github.com/mattn/go-sqlite3"
+	"log"
 	"time"
 )
 
@@ -32,3 +35,15 @@ type (
 		Content string //评论内容
 	}
 )
+
+var DB gorm.DB
+
+func init() {
+	var err error
+	DB, err = gorm.Open("sqlite3", beego.AppConfig.String("dbpath"))
+	if err != nil {
+		log.Fatalf("DB initial error ---> %s", err.Error())
+	}
+	DB.SingularTable(true)
+	DB.LogMode(beego.AppConfig.String("runmode") == "dev")
+}

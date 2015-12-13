@@ -1,7 +1,9 @@
 package utils
 
-func HandleErr(err error) {
+import "github.com/astaxie/beego"
+
+func LogError(err error) {
 	if err != nil {
-		panic(err)
+		beego.Error(err.Error())
 	}
 }

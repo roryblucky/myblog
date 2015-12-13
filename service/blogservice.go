@@ -3,24 +3,10 @@ package services
 import (
 	"container/list"
 	"github.com/astaxie/beego"
-	"github.com/jinzhu/gorm"
 	_ "github.com/mattn/go-sqlite3"
 	"myblog/models"
-	"myblog/utils"
 	"strconv"
 )
-
-type Service struct {
-	gorm.DB
-}
-
-func NewService() *Service {
-	db, err := gorm.Open("sqlite3", beego.AppConfig.String("dbpath"))
-	utils.HandleErr(err)
-	db.SingularTable(true)
-	db.LogMode(true)
-	return &Service{db}
-}
 
 type Pager struct {
 	currentPage  int         //当前页
@@ -31,8 +17,8 @@ type Pager struct {
 	Records      interface{} //数据
 }
 
-func newPager(currentPage, totalRecords int) *Pager {
-	pageSize := 6
+func newPager(currentPage, totalRecords int) (*Pager, error) {
+	pageSize, err := strconv.Atoi(beego.AppConfig.String("pagesize"))
 	startIndex := (currentPage - 1) * pageSize
 	totalPages := 0
 	if totalRecords%pageSize == 0 {
@@ -47,39 +33,39 @@ func newPager(currentPage, totalRecords int) *Pager {
 		startIndex:   startIndex,
 		pageSize:     pageSize,
 		Records:      list.New(),
-	}
+	}, err
 }
 
-func (this *Service) GetTotalRecords(i interface{}) (num int) {
-	this.Model(i).Count(&num)
+func GetTotalRecords(i interface{}) (num int) {
+	models.DB.Model(i).Count(&num)
 	return
 }
 
-func (this *Service) FindPageRecords(pageNum string, i interface{}) (result interface{}) {
+func FindPageRecords(pageNum string, i interface{}) (result interface{}, err error) {
 	currentPage := 0
 	if pageNum != "" {
-		pageNum, _ := strconv.Atoi(pageNum)
-		currentPage = pageNum
+		currentPage, err = strconv.Atoi(pageNum)
 	}
-	pager := newPager(currentPage, this.GetTotalRecords(i))
+	var pager *Pager
+	pager, err = newPager(currentPage, GetTotalRecords(i))
 
 	switch i.(type) {
 	case *models.BlogOwner:
 		data := []models.BlogOwner{}
-		this.Limit(pager.pageSize).Offset(pager.startIndex).Find(&data)
+		models.DB.Limit(pager.pageSize).Offset(pager.startIndex).Find(&data)
 		result = data
 	case *models.Article:
 		data := []models.Article{}
-		this.Limit(pager.pageSize).Offset(pager.startIndex).Find(&data)
+		models.DB.Limit(pager.pageSize).Offset(pager.startIndex).Find(&data)
 		result = data
 	case *models.Category:
 		data := []models.Category{}
-		this.Limit(pager.pageSize).Offset(pager.startIndex).Find(&data)
+		models.DB.Limit(pager.pageSize).Offset(pager.startIndex).Find(&data)
 		result = data
 	case *models.Comment:
 		data := []models.Comment{}
-		this.Limit(pager.pageSize).Offset(pager.startIndex).Find(&data)
+		models.DB.Limit(pager.pageSize).Offset(pager.startIndex).Find(&data)
 		result = data
 	}
-	return pager
+	return
 }
