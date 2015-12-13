@@ -41,12 +41,12 @@ func newPager(currentPage, totalRecords int) *Pager {
 		totalPages = totalRecords/pageSize + 1
 	}
 	return &Pager{
-		currentPage: 1,
-		totalPages: totalPages,
+		currentPage:  1,
+		totalPages:   totalPages,
 		totalRecords: totalRecords,
-		startIndex: startIndex,
-		pageSize: pageSize,
-		Records: list.New()
+		startIndex:   startIndex,
+		pageSize:     pageSize,
+		Records:      list.New(),
 	}
 }
 
