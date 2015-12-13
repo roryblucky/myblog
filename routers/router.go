@@ -1,7 +1,6 @@
 package routers
 
 import (
-	"fmt"
 	"github.com/astaxie/beego"
 	"myblog/controllers"
 )

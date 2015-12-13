@@ -45,13 +45,11 @@ func TestFindPageRecords(t *testing.T) {
 	s.Create(blogOwner2)
 	s.Create(blogOwner3)
 	s.Create(blogOwner4)
-	page := s.FindPageRecords("3", &models.BlogOwner{})
+	result := s.FindPageRecords("1", &models.BlogOwner{})
 
-	for i := page.Records.Front(); i != nil; i = i.Next() {
-		if v, ok := i.Value.(models.BlogOwner); ok {
-			if v.Introduction != "this is the test3" {
-				t.Fail()
-			}
+	if s, ok := result.([]models.Category); ok {
+		if len(s) != 4 {
+			t.Fail()
 		}
 	}
 
@@ -59,4 +57,8 @@ func TestFindPageRecords(t *testing.T) {
 	s.Delete(blogOwner2)
 	s.Delete(blogOwner3)
 	s.Delete(blogOwner4)
+}
+
+func Test(t *testing.T) {
+	s.Find(&models.BlogOwner{})
 }
