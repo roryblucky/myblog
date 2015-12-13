@@ -40,7 +40,14 @@ func newPager(currentPage, totalRecords int) *Pager {
 	} else {
 		totalPages = totalRecords/pageSize + 1
 	}
-	return &Pager{currentPage: 1, totalPages: totalPages, totalRecords: totalRecords, startIndex: startIndex, pageSize: pageSize, Records: list.New()}
+	return &Pager{
+		currentPage: 1,
+		totalPages: totalPages,
+		totalRecords: totalRecords,
+		startIndex: startIndex,
+		pageSize: pageSize,
+		Records: list.New()
+	}
 }
 
 func (this *Service) GetTotalRecords(i interface{}) (num int) {
