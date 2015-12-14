@@ -41,8 +41,8 @@ func GetTotalRecords(i interface{}) (num int) {
 	return
 }
 
-func FindPageRecords(pageNum string, i interface{}) (result interface{}, err error) {
-	currentPage := 0
+func FindPageRecords(pageNum string, i interface{}, where ...interface{}) (result interface{}, err error) {
+	currentPage := 1
 	if pageNum != "" {
 		currentPage, err = strconv.Atoi(pageNum)
 	}
@@ -55,12 +55,30 @@ func FindPageRecords(pageNum string, i interface{}) (result interface{}, err err
 		models.DB.Limit(pager.pageSize).Offset(pager.startIndex).Find(&data)
 		result = data
 	case *models.Article:
-		data := []models.Article{}
-		models.DB.Limit(pager.pageSize).Offset(pager.startIndex).Find(&data)
+		articles := []models.Article{}
+		if where != nil {
+			models.DB.Where("category_id = ?", where).Limit(pager.pageSize).Offset(pager.startIndex).Find(&articles)
+		} else {
+			models.DB.Limit(pager.pageSize).Offset(pager.startIndex).Find(&articles)
+		}
+
+		data := make([]models.Article, len(articles))
+
+		for i := 0; i < len(articles); i++ {
+			models.DB.Model(&articles[i]).Related(&articles[i].Comments)
+			data[i] = articles[i]
+		}
 		result = data
 	case *models.Category:
-		data := []models.Category{}
-		models.DB.Limit(pager.pageSize).Offset(pager.startIndex).Find(&data)
+		categories := []models.Category{}
+		models.DB.Limit(pager.pageSize).Offset(pager.startIndex).Find(&categories)
+		data := make([]models.Category, len(categories))
+
+		for i := 0; i < len(categories); i++ {
+			models.DB.Model(&categories[i]).Related(&categories[i].Articles)
+			data[i] = categories[i]
+		}
+
 		result = data
 	case *models.Comment:
 		data := []models.Comment{}

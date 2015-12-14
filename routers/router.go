@@ -7,6 +7,6 @@ import (
 
 func init() {
 	beego.Router("/", &controllers.MainController{})
-	beego.Router("/category", &controllers.CategoryController{})
+	beego.Router("/category/?:id", &controllers.CategoryController{})
 	beego.Router("/page", &controllers.PaginationController{})
 }
