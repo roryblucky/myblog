@@ -10,12 +10,12 @@ import (
 
 type (
 	Article struct {
-		ID       int        // 主键id
-		Title    string     // 文章标题
-		PostDate time.Time  // 发布时间
-		Content  string     // 文章内容
-		Category *Category  //分类id
-		Comments []*Comment //评论
+		ID         int       // 主键id
+		Title      string    // 文章标题
+		PostDate   time.Time // 发布时间
+		Content    string    // 文章内容
+		CategoryId int       //分类id
+		Comments   []Comment //评论
 	}
 
 	BlogOwner struct {
@@ -27,12 +27,13 @@ type (
 	Category struct {
 		ID       int    //主键id
 		Name     string //分类名称
-		Articles []*Article
+		Articles []Article
 	}
 
 	Comment struct {
-		ID      int    //主键id
-		Content string //评论内容
+		ID        int    //主键id
+		Content   string //评论内容
+		ArticleId int    //评论主键
 	}
 )
 
