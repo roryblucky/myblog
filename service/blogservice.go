@@ -17,8 +17,8 @@ type Pager struct {
 	Records      interface{} //数据
 }
 
-func newPager(currentPage, totalRecords int) (*Pager, error) {
-	pageSize, err := strconv.Atoi(beego.AppConfig.String("pagesize"))
+func newPager(currentPage, totalRecords int) *Pager {
+	pageSize, _ := strconv.Atoi(beego.AppConfig.String("pagesize"))
 	startIndex := (currentPage - 1) * pageSize
 	totalPages := 0
 	if totalRecords%pageSize == 0 {
@@ -33,7 +33,7 @@ func newPager(currentPage, totalRecords int) (*Pager, error) {
 		startIndex:   startIndex,
 		pageSize:     pageSize,
 		Records:      list.New(),
-	}, err
+	}
 }
 
 func GetTotalRecords(i interface{}) (num int) {
@@ -41,13 +41,16 @@ func GetTotalRecords(i interface{}) (num int) {
 	return
 }
 
-func FindPageRecords(pageNum string, i interface{}, where ...interface{}) (result interface{}, err error) {
+func FindPageRecords(pageNum string, i interface{}, where ...interface{}) (result interface{}) {
 	currentPage := 1
 	if pageNum != "" {
-		currentPage, err = strconv.Atoi(pageNum)
+		num, _ := strconv.Atoi(pageNum)
+		if num != 0 {
+			currentPage = num
+		}
 	}
 	var pager *Pager
-	pager, err = newPager(currentPage, GetTotalRecords(i))
+	pager = newPager(currentPage, GetTotalRecords(i))
 
 	switch i.(type) {
 	case *models.BlogOwner:
@@ -62,24 +65,18 @@ func FindPageRecords(pageNum string, i interface{}, where ...interface{}) (resul
 			models.DB.Limit(pager.pageSize).Offset(pager.startIndex).Find(&articles)
 		}
 
-		data := make([]models.Article, len(articles))
-
 		for i := 0; i < len(articles); i++ {
 			models.DB.Model(&articles[i]).Related(&articles[i].Comments)
-			data[i] = articles[i]
 		}
-		result = data
+		result = articles
 	case *models.Category:
 		categories := []models.Category{}
 		models.DB.Limit(pager.pageSize).Offset(pager.startIndex).Find(&categories)
-		data := make([]models.Category, len(categories))
 
 		for i := 0; i < len(categories); i++ {
 			models.DB.Model(&categories[i]).Related(&categories[i].Articles)
-			data[i] = categories[i]
 		}
-
-		result = data
+		result = categories
 	case *models.Comment:
 		data := []models.Comment{}
 		models.DB.Limit(pager.pageSize).Offset(pager.startIndex).Find(&data)
