@@ -30,6 +30,9 @@ func GetAllCategories() ([]*Category, error) {
 
 func DelCategory(id string) (int64, error) {
 	category := Category{Id: id}
+	if utils.IsEmpty(id) {
+		return 0, errors.New("category id cannot be null")
+	}
 	o := orm.NewOrm()
 	return o.Delete(&category)
 }
