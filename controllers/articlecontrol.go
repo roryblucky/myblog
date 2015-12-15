@@ -27,12 +27,15 @@ func (c *ArticleController) GetArticleById() {
 	id, err := strconv.Atoi(idStr)
 
 	if err != nil {
-		errorResult := models.ErrorResult{http.StatusBadRequest, fmt.Sprintf("Bad Request, invalid parameter")}
+		errorResult := models.ErrorResult{http.StatusBadRequest, fmt.Sprintf("Bad Request, invalid parameter, %s", idStr)}
 		c.Data["json"] = &errorResult
 	} else {
 		article := models.Article{ID: id}
-		models.DB.Find(&article).Related(&article.Comments)
-		c.Data["json"] = &article
+		if !models.DB.Find(&article).Related(&article.Comments).RecordNotFound() {
+			c.Data["json"] = &article
+		} else {
+			c.Data["json"] = &models.ErrorResult{http.StatusNotFound, "Not Found"}
+		}
 	}
 	c.ServeJson()
 }
@@ -43,7 +46,7 @@ func (c *ArticleController) GetArticlesByCategory() {
 
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
-		errorResult := models.ErrorResult{http.StatusBadRequest, fmt.Sprintf("Bad Request, invalid parameter")}
+		errorResult := models.ErrorResult{http.StatusBadRequest, fmt.Sprintf("Bad Request, invalid parameter, %s", idStr)}
 		c.Data["json"] = &errorResult
 	} else {
 		result := services.FindPageRecords(pageNum, &models.Article{}, id)

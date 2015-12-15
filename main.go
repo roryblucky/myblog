@@ -24,6 +24,5 @@ func notFound(rw http.ResponseWriter, r *http.Request) {
 
 func main() {
 	beego.Errorhandler("404", notFound)
-	beego.AutoRender = false // 关闭自动模版渲染
 	beego.Run()
 }
