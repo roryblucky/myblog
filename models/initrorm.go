@@ -19,7 +19,10 @@ func init() {
 		logger.Warn("Port not specify, use default")
 		port = 3306
 	}
-	orm.RegisterDataBase("default", "mysql", fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8", username, password, host, port, dbname), 30)
+	err = orm.RegisterDataBase("default", "mysql", fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8", username, password, host, port, dbname), 30)
+	if err != nil {
+		panic(err)
+	}
 	orm.RegisterModel(new(Comment), new(Category), new(Article), new(BlogOwner))
 	orm.Debug = true
 }

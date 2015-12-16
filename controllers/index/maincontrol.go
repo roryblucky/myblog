@@ -57,5 +57,11 @@ func (c *MainController) ShowArticle() {
 		return
 	}
 	c.Data["article"] = &article
+	categories, _ := models.GetAllCategories()
+	c.Data["categories"] = categories
+
+	blogOwner, _ := models.GetBlogOwner()
+	c.Data["blogOwner"] = blogOwner
+
 	c.TplNames = "article.html"
 }
