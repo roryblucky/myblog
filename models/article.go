@@ -3,6 +3,7 @@ package models
 import (
 	"errors"
 	"github.com/astaxie/beego/orm"
+	"myblog/logger"
 	"myblog/utils"
 	"time"
 )
@@ -12,8 +13,8 @@ type Article struct {
 	Title    string     `json:"title"`                        // 文章标题
 	PostDate time.Time  `json:"post_date"`                    // 发布时间
 	Content  string     `json:"content"`                      // 文章内容
-	Category *Category  `orm:"rel(fk)" json:"-"`              //分类id
-	Comments []*Comment `orm:"reverse(many)" json:"comments"` //评论
+	Category *Category  `orm:"rel(fk)" json:"-"`              // 分类id
+	Comments []*Comment `orm:"reverse(many)" json:"comments"` // 评论
 }
 
 func AddArticle(title, content, categoryId string) (int64, error) {
@@ -59,4 +60,56 @@ func GetArticleById(id string) (Article, error) {
 	err := o.Read(&art)
 	o.QueryTable("comment").Filter("article_id", id).RelatedSel().All(&art.Comments)
 	return art, err
+}
+
+func GetAllArticles(pageNum, pageSize int) ([]Article, bool, int) {
+	articles := []Article{}
+	hasNextPage, totalPages := GetArticlesByCondition(pageNum, pageNum, &articles)
+	return articles, hasNextPage, totalPages
+}
+
+//pageNum 当前页 pageSize 每页条数
+func GetArticlesByCondition(pageNum, pageSize int, condition interface{}) (bool, int) {
+	if pageNum < 1 {
+		pageNum = 1
+	}
+
+	if pageSize < 1 {
+		pageSize = 5
+	}
+
+	// 根据分类获取所有的文章
+	o := orm.NewOrm()
+
+	qs := o.QueryTable("article").Limit(pageSize).Offset(pageSize * (pageNum - 1))
+
+	switch condition.(type) {
+	case *Category:
+		category := condition.(*Category)
+		qs = qs.Filter("category_id", category.Id).RelatedSel()
+		qs.All(&category.Articles, "Id", "Title", "PostDate", "Content")
+
+	case *[]Article:
+		container := condition.(*[]Article)
+		qs.All(container)
+	}
+	// 计算总共有多少条记录
+	num, err := qs.Count()
+	totalRecords := int(num)
+	if err != nil {
+		logger.Warn(err.Error())
+		totalRecords = 0
+	}
+	// 计算总共有多少页
+	totalPages := totalRecords % pageSize
+	if totalPages != 0 {
+		totalRecords += 1
+	}
+
+	// 是否有下一页
+	hasNextPage := true
+	if pageNum == totalPages {
+		hasNextPage = false
+	}
+	return hasNextPage, totalPages
 }

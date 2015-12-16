@@ -3,6 +3,7 @@ package models
 import (
 	"errors"
 	"github.com/astaxie/beego/orm"
+	"myblog/logger"
 	"myblog/utils"
 )
 
@@ -21,11 +22,14 @@ func AddCategory(name string) (int64, error) {
 	return o.Insert(&category)
 }
 
-func GetAllCategories() ([]*Category, error) {
+func GetAllCategories() []Category {
 	o := orm.NewOrm()
-	var categories []*Category
+	var categories []Category
 	_, err := o.QueryTable("category").All(&categories)
-	return categories, err
+	if err != nil {
+		logger.Error("Get All Categories failed, error msg: %s", err.Error())
+	}
+	return categories
 }
 
 func DelCategory(id string) (int64, error) {

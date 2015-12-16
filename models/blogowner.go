@@ -3,6 +3,7 @@ package models
 import (
 	"errors"
 	"github.com/astaxie/beego/orm"
+	"myblog/logger"
 	"myblog/utils"
 )
 
@@ -21,11 +22,14 @@ func AddBlogOwner(imagePath, intro string) (int64, error) {
 	return o.Insert(&blogOwner)
 }
 
-func GetBlogOwner() (BlogOwner, error) {
+func GetBlogOwner() BlogOwner {
 	o := orm.NewOrm()
 	owner := BlogOwner{Id: "1"}
 	err := o.Read(&owner)
-	return owner, err
+	if err != nil {
+		logger.Error("Get Blog owner failed, error msg %s", err.Error())
+	}
+	return owner
 }
 
 func UpdateBlogOwner(b BlogOwner) error {
