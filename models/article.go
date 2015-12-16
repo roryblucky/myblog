@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"fmt"
 	"github.com/astaxie/beego/orm"
 	"myblog/logger"
 	"myblog/utils"
@@ -37,6 +38,7 @@ func DelArticle(id string) (int64, error) {
 	if utils.IsEmpty(id) {
 		return 0, errors.New("article id cannot be null")
 	}
+	utils.DelCache(fmt.Sprintf("blog-article-%s", id))
 	art := Article{Id: id}
 	return o.Delete(&art)
 }
@@ -50,15 +52,23 @@ func UpdateArticle(id string, newArt Article) error {
 	art.Category = newArt.Category
 	art.Content = newArt.Content
 	art.Title = newArt.Title
+	utils.DelCache(fmt.Sprintf("blog-article-%s", id))
 	_, err := o.Update(&art)
 	return err
 }
 
 func GetArticleById(id string) (Article, error) {
-	o := orm.NewOrm()
-	art := Article{Id: id}
-	err := o.Read(&art)
-	o.QueryTable("comment").Filter("article_id", id).RelatedSel().All(&art.Comments)
+	var art Article
+	err := utils.GetDataFromCache(fmt.Sprintf("blog-article-%s", id), &art)
+	if err != nil {
+		o := orm.NewOrm()
+		art := Article{Id: id}
+		err = o.Read(&art)
+		if err == nil {
+			o.QueryTable("comment").Filter("article_id", id).RelatedSel().All(&art.Comments)
+			utils.SetCache(fmt.Sprintf("blog-article-%s", id), art, 300)
+		}
+	}
 	return art, err
 }
 

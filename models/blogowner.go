@@ -22,17 +22,26 @@ func AddBlogOwner(imagePath, intro string) (int64, error) {
 	return o.Insert(&blogOwner)
 }
 
-func GetBlogOwner() BlogOwner {
-	o := orm.NewOrm()
-	owner := BlogOwner{Id: "1"}
-	err := o.Read(&owner)
+func GetBlogOwner() (*BlogOwner, error) {
+	var owner BlogOwner
+	var err error
+	err = utils.GetDataFromCache("blogowner", &owner)
 	if err != nil {
-		logger.Error("Get Blog owner failed, error msg %s", err.Error())
+		logger.Warn(err.Error())
+		owner := BlogOwner{Id: "1"}
+		o := orm.NewOrm()
+		err = o.Read(&owner)
+		if err != nil {
+			logger.Error("Get Blog owner failed, error msg %s", err.Error())
+			return nil, err
+		}
+		utils.SetCache("blogowner", owner, 9999)
 	}
-	return owner
+	return &owner, nil
 }
 
 func UpdateBlogOwner(b BlogOwner) error {
+	utils.DelCache("blogowner")
 	o := orm.NewOrm()
 	owner := BlogOwner{Id: "1"}
 	if o.Read(&owner) == nil {

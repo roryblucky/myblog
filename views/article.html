@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+{{with .article}}
+<head>
+    <title>{{.Title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+<nav id="navbar" class="navbar">
+    <div class="container">
+        <div class="header row">
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <h1>Blog Template</h1>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4 ">
+                <div class="list-group">
+                    <a href="/" class="list-group-item">主页</a>
+                    <a href="#" class="list-group-item">简历</a>
+                    <a href="https://github.com/roryblucky" class="list-group-item">Github</a>
+                    <a href="#" class="list-group-item">联系我</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div id="primary" class="col-xs-8 col-sm-8 col-md-8 ">
+            <main id="main" role="main">
+                <div class="title">
+                    <h2>文章标题</h2>
+                </div>
+                <p class="postDate">发布于{{blogDateFormat .PostDate}}, 28条评论</p>
+                <article class="article">博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容
+                    博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容
+                    博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容
+                    博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容
+                    博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容
+                    博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容博客内容</article>
+            </main>
+        </div>
+        <div id="secondary" class="col-xs-4 col-sm-4 col-md-4 ">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4>关于我</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <img src="../static/img/header.png" class="col-sm-4 col-md-4 hidden-xs"/>
+
+                        <p class="col-xs-12 col-sm-8 col-md-8">
+                            这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍
+                            这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4>分类</h4>
+                </div>
+                <div class="panel-body">
+                    <ul class="category">
+                        <li><a href="#">General</a></li>
+                        <li><a href="#">General</a></li>
+                        <li><a href="#">General</a></li>
+                        <li><a href="#">General</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="container footer">
+        <!--keep it-->
+    </div>
+</footer>
+</body>
+</html>
+{{end}}
