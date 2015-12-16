@@ -62,7 +62,7 @@ func GetArticleById(id string) (Article, error) {
 	err := utils.GetDataFromCache(fmt.Sprintf("blog-article-%s", id), &art)
 	if err != nil {
 		o := orm.NewOrm()
-		art := Article{Id: id}
+		art = Article{Id: id}
 		err = o.Read(&art)
 		if err == nil {
 			o.QueryTable("comment").Filter("article_id", id).RelatedSel().All(&art.Comments)

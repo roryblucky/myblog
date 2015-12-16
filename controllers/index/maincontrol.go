@@ -49,7 +49,6 @@ func (c *MainController) ShowArticle() {
 	id := c.Ctx.Input.Param(":id")
 
 	article, err := models.GetArticleById(id)
-
 	if err != nil {
 		errorResult := models.Result{Code: http.StatusNotFound, Msg: "Result cannot be found"}
 		c.Data["json"] = &errorResult
@@ -57,6 +56,7 @@ func (c *MainController) ShowArticle() {
 		return
 	}
 	c.Data["article"] = &article
+
 	categories, _ := models.GetAllCategories()
 	c.Data["categories"] = categories
 

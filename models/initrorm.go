@@ -23,6 +23,6 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	orm.RegisterModel(new(Comment), new(Category), new(Article), new(BlogOwner))
+	orm.RegisterModel(new(Comment), new(Category), new(Article), new(BlogOwner), new(AdminUser))
 	orm.Debug = true
 }
