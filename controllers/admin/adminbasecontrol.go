@@ -6,13 +6,13 @@ import (
 	"net/http"
 )
 
-type BaseAdminController struct {
+type AdminBaseController struct {
 	beego.Controller
 }
 
-func (c *BaseAdminController) CheckLogin() bool {
+func (c *AdminBaseController) CheckLogin() bool {
 	if c.GetSession("admin") == nil {
-		errorResult := models.Result{Code: http.StatusUnauthorized, Msg: "Unauthorized"}
+		errorResult := models.MessageResult{Code: http.StatusUnauthorized, Msg: "Unauthorized"}
 		c.Data["json"] = &errorResult
 		c.ServeJson()
 		return false

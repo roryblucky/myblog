@@ -13,14 +13,15 @@ type Category struct {
 	Articles []*Article `orm:"reverse(many)" json:"articles"`
 }
 
-func AddCategory(name string) (int64, error) {
+func AddCategory(name string) error {
 	if utils.IsEmpty(name) {
-		return 0, errors.New("category name cannot be null")
+		return errors.New("category name cannot be null")
 	}
 	utils.DelCache("categories")
 	category := Category{Id: utils.GenerateID(), Name: name}
 	o := orm.NewOrm()
-	return o.Insert(&category)
+	_, err := o.Insert(&category)
+	return err
 }
 
 func GetAllCategories() ([]Category, error) {
@@ -40,14 +41,15 @@ func GetAllCategories() ([]Category, error) {
 	return categories, nil
 }
 
-func DelCategory(id string) (int64, error) {
+func DelCategory(id string) error {
 	utils.DelCache("categories")
 	category := Category{Id: id}
 	if utils.IsEmpty(id) {
-		return 0, errors.New("category id cannot be null")
+		return errors.New("category id cannot be null")
 	}
 	o := orm.NewOrm()
-	return o.Delete(&category)
+	_, err := o.Delete(&category)
+	return err
 }
 
 func UpdateCategory(id string, newCategory Category) error {

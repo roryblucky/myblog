@@ -13,16 +13,17 @@ type BlogOwner struct {
 	Introduction  string `json:"intro"`       //自我介绍
 }
 
-func AddBlogOwner(imagePath, intro string) (int64, error) {
+func AddBlogOwner(imagePath, intro string) error {
 	if utils.IsEmpty(imagePath) || utils.IsEmpty(intro) {
-		return 0, errors.New("parameter ImageIcon or Introduction cannot be null")
+		return errors.New("parameter ImageIcon or Introduction cannot be null")
 	}
 	blogOwner := BlogOwner{"1", imagePath, intro}
 	o := orm.NewOrm()
-	return o.Insert(&blogOwner)
+	_, err := o.Insert(&blogOwner)
+	return err
 }
 
-func GetBlogOwner() (*BlogOwner, error) {
+func GetBlogOwner() (BlogOwner, error) {
 	var owner BlogOwner
 	var err error
 	err = utils.GetDataFromCache("blogowner", &owner)
@@ -33,11 +34,11 @@ func GetBlogOwner() (*BlogOwner, error) {
 		err = o.Read(&owner)
 		if err != nil {
 			logger.Error("Get Blog owner failed, error msg %s", err.Error())
-			return nil, err
+			return owner, err
 		}
 		utils.SetCache("blogowner", owner, 9999)
 	}
-	return &owner, nil
+	return owner, nil
 }
 
 func UpdateBlogOwner(b BlogOwner) error {

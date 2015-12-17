@@ -8,7 +8,7 @@ import (
 )
 
 type BlowOwnerController struct {
-	BaseAdminController
+	AdminBaseController
 }
 
 func (c *BlowOwnerController) Post() {
@@ -18,7 +18,7 @@ func (c *BlowOwnerController) Post() {
 		fullPath := utils.SaveFile(iconFile, fHeader, beego.AppConfig.String("upload_destination"))
 
 		if utils.IsEmpty(fullPath) {
-			errorResult := models.Result{Code: http.StatusInternalServerError, Msg: "Upload failed"}
+			errorResult := models.MessageResult{Code: http.StatusInternalServerError, Msg: "Upload failed"}
 			c.Data["json"] = &errorResult
 			c.ServeJson()
 			return
@@ -28,13 +28,13 @@ func (c *BlowOwnerController) Post() {
 		blowOwner := models.BlogOwner{ImageIconPath: fullPath, Introduction: intro}
 		err := models.UpdateBlogOwner(blowOwner)
 		if err != nil {
-			errorResult := models.Result{Code: http.StatusInternalServerError, Msg: "Update BlogOwner info failed"}
+			errorResult := models.MessageResult{Code: http.StatusInternalServerError, Msg: "Update BlogOwner info failed"}
 			c.Data["json"] = &errorResult
 			c.ServeJson()
 			return
 		}
 
-		successResult := models.Result{Code: http.StatusOK, Msg: "Update BlogOwner info successful."}
+		successResult := models.MessageResult{Code: http.StatusOK, Msg: "Update BlogOwner info successful."}
 		c.Data["json"] = &successResult
 		c.ServeJson()
 	}

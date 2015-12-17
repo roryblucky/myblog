@@ -18,10 +18,10 @@ type Article struct {
 	Comments []*Comment `orm:"reverse(many)" json:"comments"` // 评论
 }
 
-func AddArticle(title, content, categoryId string) (int64, error) {
+func AddArticle(title, content, categoryId string) error {
 	o := orm.NewOrm()
 	if utils.IsEmpty(title) {
-		return 0, errors.New("article title cannot be null")
+		return errors.New("article title cannot be null")
 	}
 	newArt := Article{
 		Id:       utils.GenerateID(),
@@ -30,17 +30,19 @@ func AddArticle(title, content, categoryId string) (int64, error) {
 		Content:  content,
 		Category: &Category{Id: categoryId},
 	}
-	return o.Insert(&newArt)
+	_, err := o.Insert(&newArt)
+	return err
 }
 
-func DelArticle(id string) (int64, error) {
+func DelArticle(id string) error {
 	o := orm.NewOrm()
 	if utils.IsEmpty(id) {
-		return 0, errors.New("article id cannot be null")
+		return errors.New("article id cannot be null")
 	}
 	utils.DelCache(fmt.Sprintf("blog-article-%s", id))
 	art := Article{Id: id}
-	return o.Delete(&art)
+	_, err := o.Delete(&art)
+	return err
 }
 
 func UpdateArticle(id string, newArt Article) error {

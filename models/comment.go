@@ -12,20 +12,22 @@ type Comment struct {
 	Article *Article `orm:"rel(fk)" json:"-"` //评论主键
 }
 
-func AddComment(content, articleId string) (int64, error) {
+func AddComment(content, articleId string) error {
 	o := orm.NewOrm()
 	if utils.IsEmpty(content) || utils.IsEmpty(articleId) {
-		return 0, errors.New("content or articleid cannot be null")
+		return errors.New("content or articleid cannot be null")
 	}
 	comment := Comment{Id: utils.GenerateID(), Content: content, Article: &Article{Id: articleId}}
-	return o.Insert(&comment)
+	_, err := o.Insert(&comment)
+	return err
 }
 
-func DelComment(id string) (int64, error) {
+func DelComment(id string) error {
 	o := orm.NewOrm()
 	if utils.IsEmpty(id) {
-		return 0, errors.New("comment id cannot be null")
+		return errors.New("comment id cannot be null")
 	}
 	comment := Comment{Id: id}
-	return o.Delete(&comment)
+	_, err := o.Delete(&comment)
+	return err
 }

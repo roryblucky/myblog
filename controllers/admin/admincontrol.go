@@ -16,7 +16,7 @@ func (c *AdminController) Post() {
 	password := c.Input().Get("password")
 
 	if utils.IsEmpty(userName) || utils.IsEmpty(password) {
-		errorResult := models.Result{Code: http.StatusForbidden, Msg: "Empty credentials"}
+		errorResult := models.MessageResult{Code: http.StatusForbidden, Msg: "Empty credentials"}
 		c.Data["json"] = &errorResult
 		c.ServeJson()
 		return
@@ -24,13 +24,13 @@ func (c *AdminController) Post() {
 
 	isSuccess := models.AdminLogin(userName, password)
 	if !isSuccess {
-		errorResult := models.Result{Code: http.StatusForbidden, Msg: "Invalid credentials"}
+		errorResult := models.MessageResult{Code: http.StatusForbidden, Msg: "Invalid credentials"}
 		c.Data["json"] = &errorResult
 		c.ServeJson()
 		return
 	}
 	c.SetSession("admin", userName)
-	result := models.Result{Code: http.StatusOK, Msg: "Login success"}
+	result := models.MessageResult{Code: http.StatusOK, Msg: "Login success"}
 	c.Data["json"] = &result
 	c.ServeJson()
 }

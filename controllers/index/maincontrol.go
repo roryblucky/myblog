@@ -44,10 +44,9 @@ func (c *MainController) Get() {
 
 	c.Data["next_page"] = fmt.Sprintf("/page/%d", pageNum+1)
 	c.Data["hasNextPage"] = hasNextPage
-	c.Data["prev_page"] = fmt.Sprint("/page/%d", pageNum-1)
+	c.Data["prev_page"] = fmt.Sprintf("/page/%d", pageNum-1)
 	c.Data["hasPrevPage"] = hasPrevPage
 	c.Data["articles"] = articles
-	fmt.Println(articles)
 	categories, _ := models.GetAllCategories()
 	c.Data["categories"] = categories
 
@@ -62,7 +61,7 @@ func (c *MainController) ShowArticle() {
 
 	article, err := models.GetArticleById(id)
 	if err != nil {
-		errorResult := models.Result{Code: http.StatusNotFound, Msg: "Result cannot be found"}
+		errorResult := models.MessageResult{Code: http.StatusNotFound, Msg: "Result cannot be found"}
 		c.Data["json"] = &errorResult
 		c.ServeJson()
 		return
