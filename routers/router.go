@@ -6,6 +6,9 @@ import (
 )
 
 func init() {
-	beego.Router("/", &controllers.MainController{}, "get:Index")
+	beego.Router("/", &controllers.MainController{})
+	beego.Router("/category/:categoryid/articles", &controllers.MainController{})
+	beego.Router("/page/:pageNum", &controllers.MainController{})
+
 	beego.Router("/article/:id", &controllers.MainController{}, "get:ShowArticle")
 }

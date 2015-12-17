@@ -72,14 +72,12 @@ func GetArticleById(id string) (Article, error) {
 	return art, err
 }
 
-func GetAllArticles(pageNum, pageSize int) ([]Article, bool, int) {
-	articles := []Article{}
-	hasNextPage, totalPages := GetArticlesByCondition(pageNum, pageNum, &articles)
-	return articles, hasNextPage, totalPages
+func GetAllArticles(pageNum, pageSize int) (bool, int, []Article) {
+	return GetArticlesByCondition(pageNum, pageNum, nil)
 }
 
 //pageNum 当前页 pageSize 每页条数
-func GetArticlesByCondition(pageNum, pageSize int, condition interface{}) (bool, int) {
+func GetArticlesByCondition(pageNum, pageSize int, condition interface{}) (bool, int, []Article) {
 	if pageNum < 1 {
 		pageNum = 1
 	}
@@ -87,7 +85,7 @@ func GetArticlesByCondition(pageNum, pageSize int, condition interface{}) (bool,
 	if pageSize < 1 {
 		pageSize = 5
 	}
-
+	var articles []Article
 	// 根据分类获取所有的文章
 	o := orm.NewOrm()
 
@@ -97,11 +95,10 @@ func GetArticlesByCondition(pageNum, pageSize int, condition interface{}) (bool,
 	case *Category:
 		category := condition.(*Category)
 		qs = qs.Filter("category_id", category.Id).RelatedSel()
-		qs.All(&category.Articles, "Id", "Title", "PostDate", "Content")
+		qs.All(&articles, "Id", "Title", "PostDate", "Content")
 
-	case *[]Article:
-		container := condition.(*[]Article)
-		qs.All(container)
+	default:
+		qs.All(&articles)
 	}
 	// 计算总共有多少条记录
 	num, err := qs.Count()
@@ -121,5 +118,5 @@ func GetArticlesByCondition(pageNum, pageSize int, condition interface{}) (bool,
 	if pageNum == totalPages {
 		hasNextPage = false
 	}
-	return hasNextPage, totalPages
+	return hasNextPage, totalPages, articles
 }
