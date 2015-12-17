@@ -8,38 +8,34 @@ import (
 )
 
 type BlowOwnerController struct {
-	beego.Controller
+	BaseAdminController
 }
 
 func (c *BlowOwnerController) Post() {
-	if c.GetSession("admin") == nil {
-		errorResult := models.Result{Code: http.StatusUnauthorized, Msg: "Unauthorized"}
-		c.Data["json"] = &errorResult
+	isLogin := c.CheckLogin()
+	if isLogin {
+		iconFile, fHeader, _ := c.GetFile("icon")
+		fullPath := utils.SaveFile(iconFile, fHeader, beego.AppConfig.String("upload_destination"))
+
+		if utils.IsEmpty(fullPath) {
+			errorResult := models.Result{Code: http.StatusInternalServerError, Msg: "Upload failed"}
+			c.Data["json"] = &errorResult
+			c.ServeJson()
+			return
+		}
+
+		intro := c.Input().Get("introduction")
+		blowOwner := models.BlogOwner{ImageIconPath: fullPath, Introduction: intro}
+		err := models.UpdateBlogOwner(blowOwner)
+		if err != nil {
+			errorResult := models.Result{Code: http.StatusInternalServerError, Msg: "Update BlogOwner info failed"}
+			c.Data["json"] = &errorResult
+			c.ServeJson()
+			return
+		}
+
+		successResult := models.Result{Code: http.StatusOK, Msg: "Update BlogOwner info successful."}
+		c.Data["json"] = &successResult
 		c.ServeJson()
-		return
 	}
-
-	iconFile, fHeader, _ := c.GetFile("icon")
-	fullPath := utils.SaveFile(iconFile, fHeader, beego.AppConfig.String("upload_destination"))
-
-	if utils.IsEmpty(fullPath) {
-		errorResult := models.Result{Code: http.StatusInternalServerError, Msg: "Upload failed"}
-		c.Data["json"] = &errorResult
-		c.ServeJson()
-		return
-	}
-
-	intro := c.Input().Get("introduction")
-	blowOwner := models.BlogOwner{ImageIconPath: fullPath, Introduction: intro}
-	err := models.UpdateBlogOwner(blowOwner)
-	if err != nil {
-		errorResult := models.Result{Code: http.StatusInternalServerError, Msg: "Update BlogOwner info failed"}
-		c.Data["json"] = &errorResult
-		c.ServeJson()
-		return
-	}
-
-	successResult := models.Result{Code: http.StatusOK, Msg: "Update BlogOwner info successful."}
-	c.Data["json"] = &successResult
-	c.ServeJson()
 }

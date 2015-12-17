@@ -18,7 +18,7 @@ func AddCategory(name string) (int64, error) {
 		return 0, errors.New("category name cannot be null")
 	}
 	utils.DelCache("categories")
-	category := &Category{Id: utils.GenerateID(), Name: name}
+	category := Category{Id: utils.GenerateID(), Name: name}
 	o := orm.NewOrm()
 	return o.Insert(&category)
 }
