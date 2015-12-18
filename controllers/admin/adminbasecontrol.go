@@ -10,12 +10,11 @@ type AdminBaseController struct {
 	beego.Controller
 }
 
-func (c *AdminBaseController) CheckLogin() bool {
+func (c *AdminBaseController) Prepare() {
 	if c.GetSession("admin") == nil {
 		errorResult := models.MessageResult{Code: http.StatusUnauthorized, Msg: "Unauthorized"}
 		c.Data["json"] = &errorResult
 		c.ServeJson()
-		return false
+		return
 	}
-	return true
 }
