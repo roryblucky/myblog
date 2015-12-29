@@ -27,6 +27,7 @@ func SaveFile(sourceFile multipart.File, fileHeader *multipart.FileHeader, des s
 	fileLocation := fileAbsPath[:strings.LastIndex(fileAbsPath, string(filepath.Separator))]
 	os.MkdirAll(fileLocation, os.ModePerm)
 	tempFile, err := os.OpenFile(fileAbsPath, os.O_WRONLY|os.O_CREATE, 0666)
+	defer tempFile.Close()
 	if err != nil {
 		logger.Error("Create temp File failed when do uploading, msg: %s", err.Error())
 		return ""
