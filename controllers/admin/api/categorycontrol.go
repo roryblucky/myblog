@@ -1,4 +1,4 @@
-package admin
+package api
 
 import (
 	"fmt"
@@ -16,6 +16,7 @@ func (c *CategoryController) ShowAllCategories() {
 	if err != nil {
 		errorResult := models.MessageResult{Code: http.StatusInternalServerError, Msg: err.Error()}
 		c.Data["json"] = &errorResult
+		c.Ctx.Output.SetStatus(http.StatusInternalServerError)
 		c.ServeJson()
 		return
 	}
@@ -32,6 +33,7 @@ func (c *CategoryController) AddCategory() {
 	if utils.IsEmpty(name) {
 		errorResult := models.MessageResult{Code: http.StatusBadRequest, Msg: "Missing parameter"}
 		c.Data["json"] = &errorResult
+		c.Ctx.Output.SetStatus(http.StatusBadRequest)
 		c.ServeJson()
 		return
 	}
@@ -39,6 +41,7 @@ func (c *CategoryController) AddCategory() {
 	if err != nil {
 		errorResult := models.MessageResult{Code: http.StatusInternalServerError, Msg: err.Error()}
 		c.Data["json"] = &errorResult
+		c.Ctx.Output.SetStatus(http.StatusInternalServerError)
 		c.ServeJson()
 		return
 	}
@@ -53,6 +56,7 @@ func (c *CategoryController) UpdateCategory() {
 	if utils.IsEmpty(id) {
 		errorResult := models.MessageResult{Code: http.StatusBadRequest, Msg: "Missing parameter"}
 		c.Data["json"] = &errorResult
+		c.Ctx.Output.SetStatus(http.StatusBadRequest)
 		c.ServeJson()
 		return
 	}
@@ -63,6 +67,7 @@ func (c *CategoryController) UpdateCategory() {
 	if err != nil {
 		errorResult := models.MessageResult{Code: http.StatusInternalServerError, Msg: err.Error()}
 		c.Data["json"] = &errorResult
+		c.Ctx.Output.SetStatus(http.StatusInternalServerError)
 		c.ServeJson()
 		return
 	}
@@ -77,6 +82,7 @@ func (c *CategoryController) DeleteCategory() {
 	if utils.IsEmpty(id) {
 		errorResult := models.MessageResult{Code: http.StatusBadRequest, Msg: "Missing parameter"}
 		c.Data["json"] = &errorResult
+		c.Ctx.Output.SetStatus(http.StatusBadRequest)
 		c.ServeJson()
 		return
 	}
@@ -84,6 +90,7 @@ func (c *CategoryController) DeleteCategory() {
 	if err != nil {
 		errorResult := models.MessageResult{Code: http.StatusInternalServerError, Msg: err.Error()}
 		c.Data["json"] = &errorResult
+		c.Ctx.Output.SetStatus(http.StatusInternalServerError)
 		c.ServeJson()
 		return
 	}

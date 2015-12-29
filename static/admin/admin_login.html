@@ -4,17 +4,18 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="IE=edge">
     <title>后台登录</title>
-    <link rel="stylesheet" href="css/form.css">
-    <script type="text/javascript" src="/vendor/angular/angular.js"></script>
+    <link rel="stylesheet" href="/static/admin/css/form.css">
+    <script type="text/javascript" src="/static/admin/vendor/jquery/jquery.js"></script>
+    <script type="text/javascript" src="/static/admin/vendor/angular/angular.js"></script>
 </head>
 <body ng-app="myblog.loginform">
 <form name="loginForm" class="login" ng-controller="LoginController" ng-submit="login()">
     <h1 class="login-header">后台登录</h1>
     <p>
-        <input type="text" name="username" ng-model="username" id="login" placeholder="用户名">
+        <input type="text" name="username" ng-model="loginform.username" id="login" placeholder="用户名" required>
     </p>
     <p>
-        <input type="password" name="password" id="password" ng-model="password" placeholder="密码">
+        <input type="password" name="password" id="password" ng-model="loginform.password" placeholder="密码" required>
     </p>
     <p class="login-submit">
         <button type="submit" class="login-button" ng-disabled="loginForm.$invalid">登录</button>
@@ -23,5 +24,5 @@
 </form>
 
 </body>
-<script type="text/javascript" src="/js/controller/logincontrl.js"></script>
+<script type="text/javascript" src="/static/admin/js/controller/logincontrl.js"></script>
 </html>

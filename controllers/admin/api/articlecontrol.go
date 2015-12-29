@@ -1,4 +1,4 @@
-package admin
+package api
 
 import (
 	"fmt"
@@ -20,6 +20,7 @@ func (c *ArticleController) AddArticle() {
 	if utils.IsEmpty(categoryId) || utils.IsEmpty(title) {
 		errorResult := models.MessageResult{Code: http.StatusBadRequest, Msg: "Title or Category cannot be empty"}
 		c.Data["json"] = &errorResult
+		c.Ctx.Output.SetStatus(http.StatusBadRequest)
 		c.ServeJson()
 		return
 	}
@@ -31,6 +32,7 @@ func (c *ArticleController) AddArticle() {
 			Msg:  fmt.Sprintf("Add article failed, error msg: %s", err.Error()),
 		}
 		c.Data["json"] = &errorResult
+		c.Ctx.Output.SetStatus(http.StatusInternalServerError)
 		c.ServeJson()
 		return
 	}
@@ -47,6 +49,7 @@ func (c *ArticleController) UpdateArticle() {
 	if utils.IsEmpty(id) || utils.IsEmpty(categoryId) || utils.IsEmpty(title) {
 		errorResult := models.MessageResult{Code: http.StatusBadRequest, Msg: "Title or Category cannot be empty"}
 		c.Data["json"] = &errorResult
+		c.Ctx.Output.SetStatus(http.StatusBadRequest)
 		c.ServeJson()
 		return
 	}
@@ -59,6 +62,7 @@ func (c *ArticleController) UpdateArticle() {
 			Msg:  fmt.Sprintf("Update article failed, error msg: %s", err.Error()),
 		}
 		c.Data["json"] = &errorResult
+		c.Ctx.Output.SetStatus(http.StatusInternalServerError)
 		c.ServeJson()
 		return
 	}
@@ -72,6 +76,7 @@ func (c *ArticleController) DelArticle() {
 	if utils.IsEmpty(id) {
 		errorResult := models.MessageResult{Code: http.StatusBadRequest, Msg: "Id cannot be empty"}
 		c.Data["json"] = &errorResult
+		c.Ctx.Output.SetStatus(http.StatusBadRequest)
 		c.ServeJson()
 		return
 	}
@@ -82,6 +87,7 @@ func (c *ArticleController) DelArticle() {
 			Msg:  fmt.Sprintf("Delete article failed, error msg: %s", err.Error()),
 		}
 		c.Data["json"] = &errorResult
+		c.Ctx.Output.SetStatus(http.StatusInternalServerError)
 		c.ServeJson()
 		return
 	}

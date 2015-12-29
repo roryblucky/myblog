@@ -1,17 +1,19 @@
 package models
 
-import "github.com/astaxie/beego/orm"
+import (
+	"github.com/astaxie/beego/orm"
+)
 
 type AdminUser struct {
 	Id       string `orm:"pk"`
-	UserName string
+	Username string
 	Password string
 }
 
-func AdminLogin(userName, password string) bool {
-	user := AdminUser{UserName: userName, Password: password}
+func AdminLogin(username, password string) bool {
 	o := orm.NewOrm()
-	if o.Read(&user) == nil {
+	isExist := o.QueryTable("admin_user").Filter("username", username).Filter("password", password).Exist()
+	if isExist {
 		return true
 	}
 	return false

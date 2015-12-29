@@ -1,6 +1,7 @@
-package admin
+package api
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 	"myblog/models"
 	"myblog/utils"
@@ -13,21 +14,20 @@ type BlowOwnerController struct {
 
 func (c *BlowOwnerController) Post() {
 	iconFile, fHeader, _ := c.GetFile("icon")
+	fmt.Println(iconFile)
 	fullPath := utils.SaveFile(iconFile, fHeader, beego.AppConfig.String("upload_destination"))
 
-	if utils.IsEmpty(fullPath) {
-		errorResult := models.MessageResult{Code: http.StatusInternalServerError, Msg: "Upload failed"}
-		c.Data["json"] = &errorResult
-		c.ServeJson()
-		return
-	}
-
 	intro := c.Input().Get("introduction")
-	blowOwner := models.BlogOwner{ImageIconPath: fullPath, Introduction: intro}
+
+	blowOwner := models.BlogOwner{Introduction: intro}
+	if !utils.IsEmpty(fullPath) {
+		blowOwner.ImageIconPath = fullPath
+	}
 	err := models.UpdateBlogOwner(blowOwner)
 	if err != nil {
 		errorResult := models.MessageResult{Code: http.StatusInternalServerError, Msg: "Update BlogOwner info failed"}
 		c.Data["json"] = &errorResult
+		c.Ctx.Output.SetStatus(http.StatusInternalServerError)
 		c.ServeJson()
 		return
 	}

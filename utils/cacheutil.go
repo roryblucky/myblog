@@ -47,7 +47,7 @@ func DelCache(key string) error {
 	err := cc.Delete(key)
 
 	if err != nil {
-		logger.Warn("delete cache %s failed, maaybe not exist", key)
+		logger.Warn("delete cache %s failed, maybe not exist", key)
 		return err
 	}
 	return nil
