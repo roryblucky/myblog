@@ -34,7 +34,7 @@ func (c *AdminController) Post() {
 	c.ServeJson()
 }
 
-// redirect them to angular route
+// redirect to angular route
 func (c *AdminController) Get() {
 	if c.GetSession("admin") != nil {
 		c.TplNames = "admin/admin_index.html"

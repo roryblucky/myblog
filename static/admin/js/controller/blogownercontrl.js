@@ -6,13 +6,12 @@ blogMain.controller('BlogUploadController', BlogOwnerUpdate);
 
 function BlogOwnerUpdate($scope, Upload) {
     $scope.blogowner = {};
-    $scope.blogowner.isErr = false;
     var update = function() {
         Upload.upload({
             url: '/api/admin/blogowner/update',
             data: {
-                icon: $scope.blogowner.icon,
-                introduction: $scope.blogowner.intro
+                'icon': $scope.blogowner.icon,
+                'introduction': $scope.blogowner.intro
             }
         }).success(function() {
             $scope.blogowner.result = '更新成功';

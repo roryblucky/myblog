@@ -23,9 +23,10 @@ func SaveFile(sourceFile multipart.File, fileHeader *multipart.FileHeader, des s
 	if sourceFile == nil || fileHeader == nil || IsEmpty(des) {
 		return ""
 	}
-	fullPath := fmt.Sprintf("%s%c%s", des, filepath.Separator, fileHeader.Filename)
-	os.MkdirAll(fullPath, os.ModePerm)
-	tempFile, err := os.OpenFile(fullPath, os.O_WRONLY|os.O_CREATE, 0666)
+	fileAbsPath := fmt.Sprintf("%s%c%s", des, filepath.Separator, fileHeader.Filename)
+	fileLocation := fileAbsPath[:strings.LastIndex(fileAbsPath, string(filepath.Separator))]
+	os.MkdirAll(fileLocation, os.ModePerm)
+	tempFile, err := os.OpenFile(fileAbsPath, os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
 		logger.Error("Create temp File failed when do uploading, msg: %s", err.Error())
 		return ""
@@ -35,5 +36,5 @@ func SaveFile(sourceFile multipart.File, fileHeader *multipart.FileHeader, des s
 		logger.Error("Copy File content failed when do uploading, msg: %s", err.Error())
 		return ""
 	}
-	return fullPath
+	return fileAbsPath
 }
