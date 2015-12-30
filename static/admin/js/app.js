@@ -1,7 +1,7 @@
 /**
  * Created by RoryGao on 15/12/28.
  */
-var blogMain = angular.module('myblog-main', ['ngRoute','ngAnimate', 'ngFileUpload', 'ui.bootstrap', 'myblog.services']);
+var blogMain = angular.module('myblog-main', ['ngRoute', 'ngAnimate', 'ngFileUpload', 'ui.bootstrap', 'myblog.services', 'myblog.alert']);
 
 blogMain.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider

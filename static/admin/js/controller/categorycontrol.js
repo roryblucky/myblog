@@ -4,9 +4,9 @@
 
 blogMain.controller('CategoryController', CategoryController).controller('updateCategoryDialogController', updateCategoryDialogController);
 
-CategoryController.$inject = ['$scope', '$uibModal', '$window', 'CategoryRestService'];
+CategoryController.$inject = ['$scope', '$uibModal', '$window', 'CategoryRestService', 'AlertService'];
 
-function CategoryController($scope, $uibModal, $window, CategoryRestService) {
+function CategoryController($scope, $uibModal, $window, CategoryRestService, AlertService) {
 
     CategoryRestService.getCategories().then(
         function (result) {
@@ -24,7 +24,7 @@ function CategoryController($scope, $uibModal, $window, CategoryRestService) {
             CategoryRestService.delCategory($scope.categories[$index]).then(function () {
                 $scope.categories.splice($index, 1);
             }, function (err) {
-
+                AlertService.showAlert();
             });
         });
     };
