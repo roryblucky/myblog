@@ -6,7 +6,8 @@ import (
 )
 
 func init() {
-	beego.Router("/admin/login", &admin.AdminController{})
+	beego.Router("/admin/login", &admin.AdminController{}, "post:Login")
+	beego.Router("/admin/logout", &admin.AdminController{}, "get:Logout")
 
 	// angular route
 	beego.Router("/admin/main", &admin.AdminController{})

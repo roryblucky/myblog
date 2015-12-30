@@ -11,7 +11,7 @@ type AdminController struct {
 	beego.Controller
 }
 
-func (c *AdminController) Post() {
+func (c *AdminController) Login() {
 	username := c.Input().Get("username")
 	password := c.Input().Get("password")
 
@@ -34,10 +34,16 @@ func (c *AdminController) Post() {
 	c.ServeJson()
 }
 
+func (c *AdminController) Logout() {
+	c.DelSession("admin")
+	c.Redirect("/static/admin/admin_login.html", 302)
+}
+
 // redirect to angular route
 func (c *AdminController) Get() {
-	if c.GetSession("admin") != nil {
+	if name, ok := c.GetSession("admin").(string); ok {
 		c.TplNames = "admin/admin_index.html"
+		c.Data["name"] = name
 	} else {
 		c.Redirect("/static/admin/admin_login.html", 302)
 	}

@@ -3,9 +3,9 @@
  */
 (function () {
     'use strict';
-    angular.module('myblog.loginform', []).controller('LoginController', ['$scope', '$http', '$window', AdminLogin]);
+    angular.module('myblog.loginform', []).controller('LoginController', ['$scope', '$http', '$window', '$httpParamSerializerJQLike', AdminLogin]);
 
-    function AdminLogin($scope, $http, $window) {
+    function AdminLogin($scope, $http, $window, $httpParamSerializerJQLike) {
         $scope.loginform = {};
         var loginUrl = "/admin/login";
         var login = function () {
@@ -15,7 +15,7 @@
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                data: $.param($scope.loginform)
+                data: $httpParamSerializerJQLike($scope.loginform)
             }).success(function (data) {
                 if (data.code != 200) {
                     $scope.loginform.result = '用户名或密码错误';
