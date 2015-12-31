@@ -1,5 +1,6 @@
 <div class="panel">
     <div class="panel-heading"><h1 class="page-header">分类管理</h1></div>
+    <uib-alert type="danger" ng-show="isShow" close="closeAlert()" class="cssFade alert">删除失败</uib-alert>
     <div>
         <ul class="list-inline pull-right">
             <li><button class="btn btn-success" data-toggle="modal" data-target=".bs-category-add-modal" ng-click="openUpdateDialog()">新增</button></li>
@@ -27,4 +28,4 @@
         </tbody>
     </table>
 </div>
-<uib-alert type="danger" ng-show="isShow">删除失败</uib-alert>
+
