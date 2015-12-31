@@ -1,0 +1,16 @@
+.alert {
+    position: absolute;
+    right: 10px;
+    top: 60px;
+    text-align: center;
+    width: 300px;
+}
+
+.cssFade {
+    transition: 0.5s linear all;
+    opacity: 1;
+}
+
+.cssFade.ng-hide {
+    opacity: 0;
+}
