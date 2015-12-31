@@ -13,8 +13,9 @@ func init() {
 	beego.Router("/api/admin/category/update/:id", &api.CategoryController{}, "post:UpdateCategory")
 	beego.Router("/api/admin/category/del/:id", &api.CategoryController{}, "get:DeleteCategory")
 
-	beego.Router("/api/admin/articles", &api.ArticleController{}, "get:GetArticles")
-	beego.Router("/api/admin/article/del/:id", &api.ArticleController{}, "post:DelArticle")
+	beego.Router("/api/admin/articles/:pageNum", &api.ArticleController{}, "get:GetArticles")
+	beego.Router("/api/admin/article/:id", &api.ArticleController{}, "get:GetArticleById")
+	beego.Router("/api/admin/article/del/:id", &api.ArticleController{}, "get:DelArticle")
 	beego.Router("/api/admin/article/update/:id", &api.ArticleController{}, "post:UpdateArticle")
 	beego.Router("/api/admin/article/add", &api.ArticleController{}, "post:AddArticle")
 }

@@ -96,6 +96,33 @@ func (c *ArticleController) DelArticle() {
 	c.ServeJson()
 }
 
+func (c *ArticleController) GetArticleById() {
+	id := c.Ctx.Input.Param(":id")
+	if utils.IsEmpty(id) {
+		errorResult := models.MessageResult{Code: http.StatusBadRequest, Msg: "Id cannot be empty"}
+		c.Data["json"] = &errorResult
+		c.Ctx.Output.SetStatus(http.StatusBadRequest)
+		c.ServeJson()
+		return
+	}
+
+	article, err := models.GetArticleById(id)
+	if err != nil {
+		errorResult := models.MessageResult{Code: http.StatusNotFound, Msg: "Result cannot be found"}
+		c.Data["json"] = &errorResult
+		c.Ctx.Output.SetStatus(http.StatusNotFound)
+		c.ServeJson()
+		return
+	}
+	successResult := models.DataResult{
+		Code: http.StatusOK,
+		Data: article,
+	}
+	c.Data["json"] = &successResult
+	c.ServeJson()
+
+}
+
 func (c *ArticleController) GetArticles() {
 	pageNumStr := c.Ctx.Input.Param(":pageNum")
 	pageNum, err := strconv.Atoi(pageNumStr)

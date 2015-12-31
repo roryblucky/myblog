@@ -12,7 +12,7 @@ func init() {
 	// angular route
 	beego.Router("/admin/main", &admin.AdminController{})
 	beego.Router("/admin/article", &admin.AdminController{})
-	beego.Router("/admin/article/add", &admin.AdminController{})
+	beego.Router("/admin/article/:op", &admin.AdminController{})
 	beego.Router("/admin/category", &admin.AdminController{})
 	beego.Router("/admin/blogowner", &admin.AdminController{})
 }
