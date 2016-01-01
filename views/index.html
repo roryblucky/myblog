@@ -33,37 +33,23 @@
         <div id="primary" class="col-xs-8 col-sm-8 col-md-8 ">
             <main id="main" role="main">
                 {{{range .articles}}}
-                {{{with .}}}
-                <ul class="media-list">
-                    <li class="media-body">
-                        <div class="title">
-                            <a href="/article/{{{.Id}}}" class="media-heading">
-                                <h2>{{{.Title}}}</h2>
-                            </a>
-                        </div>
+                    {{{with .}}}
+                    <ul class="media-list">
+                        <li class="media-body">
+                            <div class="title">
+                                <a href="/article/{{{.Id}}}" class="media-heading">
+                                    <h2>{{{.Title}}}</h2>
+                                </a>
+                            </div>
 
-                        <p class="postDate">发布于{{{blogDateFormat .PostDate}}}</p>
-                        <article id="article-{{{.Id}}}">
-                            <script>convertArticle2HTML({
-                            {
-                                {.
-                                    Id
-                                }
-                            }
-                            },
-                            {
-                                {
-                                    {.
-                                        Content
-                                    }
-                                }
-                            }
-                            )</script>
-                        </article>
-                        <a href="#" class="pull-right reading">Continue reading >></a>
-                    </li>
-                </ul>
-                {{{end}}}
+                            <p class="postDate">发布于{{{blogDateFormat .PostDate}}}</p>
+                            <article id="article-{{{.Id}}}">
+                                <script>convertArticle2HTML({{{.Id}}}, {{{.Content}}})</script>
+                            </article>
+                            <a href="#" class="pull-right reading">Continue reading >></a>
+                        </li>
+                    </ul>
+                    {{{end}}}
                 {{{end}}}
 
                 <nav>
@@ -86,8 +72,8 @@
 
                         <p class="col-xs-12 col-sm-8 col-md-8">
 
-                            {{{.Introduction}}}
-                            {{{end}}}
+                                {{{.Introduction}}}
+                        {{{end}}}
                         </p>
                     </div>
                 </div>
