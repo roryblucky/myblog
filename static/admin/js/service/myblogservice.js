@@ -60,9 +60,9 @@ angular.module('myblog.services',[]).factory('CategoryRestService', ['$http', '$
         $http({
             method: 'GET',
             url: '/api/admin/categories'
-        }).success(function (data) {
+        }).then(function (data) {
             deferred.resolve(data);
-        }).error(function (reason) {
+        }, function (reason) {
             deferred.reject(reason);
         });
         return deferred.promise;
@@ -74,21 +74,28 @@ angular.module('myblog.services',[]).factory('CategoryRestService', ['$http', '$
         updateCategory: updateCategory,
         getCategories: getCategories
     };
-}]).factory('ArticleRestService', ['$http', '$q', function ($http, $q) {
+}]).factory('ArticleRestService', ['$http', '$q', '$httpParamSerializer', function ($http, $q, $httpParamSerializer) {
 
-    var addArticle = function (params) {
+    var addOrUpdateArticle = function (params, isUpdate) {
         var deferred = $q.defer();
+        var _url = '/api/admin/article/add';
+        if (isUpdate) {
+            _url = '/api/admin/article/update/' + params.id;
+        }
         $http({
             method: 'POST',
-            url: '/api/admin/article/add',
-            data: {
+            url: _url,
+            headers: {
+              'Content-type' : 'application/x-www-form-urlencoded'
+            },
+            data: $httpParamSerializer({
                 title: params.title,
                 content: params.content,
                 category_id: params.category_id
-            }
-        }).success(function (data) {
+            })
+        }).then(function (data) {
             deferred.resolve(data);
-        }).error(function (reason) {
+        }, function (reason) {
             deferred.reject(reason);
         });
         return deferred.promise;
@@ -99,49 +106,45 @@ angular.module('myblog.services',[]).factory('CategoryRestService', ['$http', '$
         $http({
             method: 'Get',
             url: '/api/admin/article/del/' + params.id
-        }).success(function (data) {
+        }).then(function (data) {
             deferred.resolve(data);
-        }).error(function (reason) {
+        }, function (reason) {
             deferred.reject(reason);
         });
         return deferred.promise;
     };
 
-    var updateArticle = function (params) {
-        var deferred = $q.defer();
-        $http({
-            method: 'POST',
-            url: '/api/admin/article/update/' + params.id,
-            data: {
-                title: params.title,
-                content: params.content,
-                category_id: params.category_id
-            }
-        }).success(function (data) {
-            deferred.resolve(data);
-        }).error(function (reason) {
-            deferred.reject(reason);
-        });
-        return deferred.promise;
-    };
 
-    var getArticles = function () {
+    var getArticles = function (pageNum) {
         var deferred = $q.defer();
         $http({
             method: 'GET',
-            url: '/api/admin/articles'
-        }).success(function (data) {
+            url: '/api/admin/articles/' + pageNum
+        }).then(function (data) {
             deferred.resolve(data);
-        }).error(function (error) {
-            deferred.reject(error);
+        }, function (reason) {
+            deferred.reject(reason);
+        });
+        return deferred.promise;
+    };
+
+    var getArticleInfo = function(id) {
+        var deferred = $q.defer();
+        $http({
+            method: 'GET',
+            url: '/api/admin/article/' + id
+        }).then(function (data) {
+            deferred.resolve(data);
+        }, function (reason) {
+            deferred.reject(reason);
         });
         return deferred.promise;
     };
 
     return {
-        addArticle: addArticle,
+        addOrUpdateArticle: addOrUpdateArticle,
         delArticle: delArticle,
-        updateArticle: updateArticle,
-        getArticles: getArticles
+        getArticles: getArticles,
+        getArticleInfo: getArticleInfo
     };
 }]);

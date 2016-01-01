@@ -15,62 +15,17 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>1</td>
-            <td>哈哈</td>
-            <td>2015-09-12</td>
+        <tr ng-repeat="article in articles">
+            <td ng-bind="article.id"></td>
+            <td ng-bind="article.title"></td>
+            <td ng-bind="article.post_date"></td>
             <td>
                 <ul class="list-inline">
-                    <li><a href="">删除</a></li>
-                    <li><a href="">编辑</a></li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>哈哈</td>
-            <td>2015-09-12</td>
-            <td>
-                <ul class="list-inline">
-                    <li><a href="">删除</a></li>
-                    <li><a href="">编辑</a></li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>哈哈</td>
-            <td>2015-09-12</td>
-            <td>
-                <ul class="list-inline">
-                    <li><a href="">删除</a></li>
-                    <li><a href="">编辑</a></li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>哈哈</td>
-            <td>2015-09-12</td>
-            <td>
-                <ul class="list-inline">
-                    <li><a href="">删除</a></li>
-                    <li><a href="">编辑</a></li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>哈哈</td>
-            <td>2015-09-12</td>
-            <td>
-                <ul class="list-inline">
-                    <li><a href="#" data-toggle="modal" data-target=".bs-article-modal-sm">删除</a></li>
-                    <li><a href="">编辑</a></li>
+                    <li><a href="javascript:void(0);" ng-click="openDelDialog($index)">删除</a></li>
+                    <li><a ng-href="/admin/article/update?id={{article.id}}">编辑</a></li>
                 </ul>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
-<div ng-include="'/static/admin/view/article/article_del_dialog.html'"></div>

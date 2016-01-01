@@ -10,7 +10,7 @@ function CategoryController($scope, $uibModal, $window, CategoryRestService, Ale
 
     CategoryRestService.getCategories().then(
         function (result) {
-            $scope.categories = result.data;
+            $scope.categories = result.data.data;
         }
     );
 

@@ -6,10 +6,12 @@ var blogMain = angular.module('myblog-main', ['ngRoute', 'ngAnimate', 'ngFileUpl
 blogMain.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/admin/article', {
-            templateUrl: '/static/admin/view/article/article_main.html'
+            templateUrl: '/static/admin/view/article/article_main.html',
+            controller: 'ArticleController'
         })
-        .when('/admin/article/add', {
-            templateUrl: '/static/admin/view/article/article_info.html'
+        .when('/admin/article/:op', {
+            templateUrl: '/static/admin/view/article/article_info.html',
+            controller: 'UpdateArticleController'
         })
         .when('/admin/category', {
             templateUrl: '/static/admin/view/category/category_main.html',

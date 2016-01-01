@@ -16,12 +16,12 @@
         </thead>
         <tbody>
         <tr ng-repeat="category in categories">
-            <td ng-bind="category.id">1</td>
+            <td ng-bind="category.id"></td>
             <td ng-bind="category.name"></td>
             <td>
                 <ul class="list-inline">
-                    <li><a href="javascript:void(0);" data-toggle="modal" data-target=".bs-category-del-modal-sm" ng-click="openDelDialog($index)">删除</a></li>
-                    <li><a href="javascript:void(0);" data-toggle="modal" data-target=".bs-category-update-modal" ng-click="openUpdateDialog($index)">编辑</a></li>
+                    <li><a href="javascript:void(0);" ng-click="openDelDialog($index)">删除</a></li>
+                    <li><a href="javascript:void(0);" ng-click="openUpdateDialog($index)">编辑</a></li>
                 </ul>
             </td>
         </tr>
