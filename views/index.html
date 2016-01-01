@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <title>Blog</title>
+    <title>{{{.title}}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="http://cdn.staticfile.org/twitter-bootstrap/3.3.6/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/static/css/main.css">
     <script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/markdown.js"></script>
+    <script type="text/javascript" src="/static/js/article.js"></script>
 </head>
 <body>
 <nav id="navbar" class="navbar">
@@ -30,91 +32,40 @@
     <div class="row">
         <div id="primary" class="col-xs-8 col-sm-8 col-md-8 ">
             <main id="main" role="main">
+                {{{range .articles}}}
+                {{{with .}}}
                 <ul class="media-list">
                     <li class="media-body">
                         <div class="title">
-                            <a href="/article/thisid" class="media-heading">
-                                <h2>WHY VAGRANT?</h2>
+                            <a href="/article/{{{.Id}}}" class="media-heading">
+                                <h2>{{{.Title}}}</h2>
                             </a>
                         </div>
 
-                        <p class="postDate">发布于2015年12月8日, 28条评论</p>
-                        <article class="article">
-                            Vagrant provides easy to configure, reproducible, and portable work environments built on
-                            top of industry-standard technology and controlled by a single consistent workflow to help
-                            maximize the productivity and flexibility of you and your team.
-
-                            To achieve its magic, Vagrant stands on the shoulders of giants. Machines are provisioned on
-                            top of VirtualBox, VMware, AWS, or any other provider. Then, industry-standard provisioning
-                            tools such as shell scripts, Chef, or Puppet, can be used to automatically install and
-                            configure software on the machine.
+                        <p class="postDate">发布于{{{blogDateFormat .PostDate}}}</p>
+                        <article id="article-{{{.Id}}}">
+                            <script>convertArticle2HTML({
+                            {
+                                {.
+                                    Id
+                                }
+                            }
+                            },
+                            {
+                                {
+                                    {.
+                                        Content
+                                    }
+                                }
+                            }
+                            )</script>
                         </article>
                         <a href="#" class="pull-right reading">Continue reading >></a>
                     </li>
                 </ul>
-                <ul class="media-list">
-                    <li class="media-body">
-                        <div class="title">
-                            <a href="#" class="media-heading">
-                                <h2>WHY VAGRANT?</h2>
-                            </a>
-                        </div>
-                        <p class="postDate">发布于2015年12月8日, 28条评论</p>
-                        <article class="article">
-                            Vagrant provides easy to configure, reproducible, and portable work environments built on
-                            top of industry-standard technology and controlled by a single consistent workflow to help
-                            maximize the productivity and flexibility of you and your team.
+                {{{end}}}
+                {{{end}}}
 
-                            To achieve its magic, Vagrant stands on the shoulders of giants. Machines are provisioned on
-                            top of VirtualBox, VMware, AWS, or any other provider. Then, industry-standard provisioning
-                            tools such as shell scripts, Chef, or Puppet, can be used to automatically install and
-                            configure software on the machine.
-                        </article>
-                        <a href="#" class="pull-right reading">Continue reading >></a>
-                    </li>
-                </ul>
-                <ul class="media-list">
-                    <li class="media-body">
-                        <div class="title">
-                            <a href="#" class="media-heading">
-                                <h2>WHY VAGRANT?</h2>
-                            </a>
-                        </div>
-
-                        <p class="postDate">发布于2015年12月8日, 28条评论</p>
-                        <article class="article">
-                            Vagrant provides easy to configure, reproducible, and portable work environments built on
-                            top of industry-standard technology and controlled by a single consistent workflow to help
-                            maximize the productivity and flexibility of you and your team.
-
-                            To achieve its magic, Vagrant stands on the shoulders of giants. Machines are provisioned on
-                            top of VirtualBox, VMware, AWS, or any other provider. Then, industry-standard provisioning
-                            tools such as shell scripts, Chef, or Puppet, can be used to automatically install and
-                            configure software on the machine.
-                        </article>
-                        <a href="#" class="pull-right reading">Continue reading >></a>
-                    </li>
-                </ul>
-                <ul class="media-list">
-                    <li class="media-body">
-                        <div class="title">
-                            <a href="#" class="media-heading">
-                                <h2>WHY VAGRANT?</h2>
-                            </a>
-                        </div>
-                        <article class="article">
-                            Vagrant provides easy to configure, reproducible, and portable work environments built on
-                            top of industry-standard technology and controlled by a single consistent workflow to help
-                            maximize the productivity and flexibility of you and your team.
-
-                            To achieve its magic, Vagrant stands on the shoulders of giants. Machines are provisioned on
-                            top of VirtualBox, VMware, AWS, or any other provider. Then, industry-standard provisioning
-                            tools such as shell scripts, Chef, or Puppet, can be used to automatically install and
-                            configure software on the machine.
-                        </article>
-                        <a href="#" class="pull-right reading">Continue reading >></a>
-                    </li>
-                </ul>
                 <nav>
                     <ul class="pager">
                         <li><a href="#"><< 上一页</a></li><li><a href="#">下一页 >></a></li>
@@ -129,11 +80,14 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
+                        {{{with .blogOwner}}}
+                        <!--TODO relative path-->
                         <img src="/static/js/img/header.png" class="col-sm-4 col-md-4 hidden-xs"/>
 
                         <p class="col-xs-12 col-sm-8 col-md-8">
-                            这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍
-                            这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍
+
+                            {{{.Introduction}}}
+                            {{{end}}}
                         </p>
                     </div>
                 </div>

@@ -1,7 +1,6 @@
 package api
 
 import (
-	"fmt"
 	"github.com/astaxie/beego"
 	"myblog/models"
 	"myblog/utils"
@@ -14,7 +13,6 @@ type BlowOwnerController struct {
 
 func (c *BlowOwnerController) Post() {
 	iconFile, fHeader, _ := c.GetFile("icon")
-	fmt.Println(iconFile)
 	fullPath := utils.SaveFile(iconFile, fHeader, beego.AppConfig.String("upload_destination"))
 
 	intro := c.Input().Get("introduction")

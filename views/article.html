@@ -35,9 +35,9 @@
                 <div class="title">
                     <h2>{{{.Title}}}</h2>
                 </div>
-                <p class="postDate">发布于{{{blogDateFormat .PostDate}}}, 28条评论</p>
-                <article class="article">
-                    <script>convertArticle2HTML({{{.Content}}})</script>
+                <p class="postDate">发布于{{{blogDateFormat .PostDate}}}</p>
+                <article id="article-{{{.Id}}}">
+                    <script>convertArticle2HTML({{{.Id}}}, {{{.Content}}})</script>
                 </article>
             </main>
         </div>

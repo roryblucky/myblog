@@ -19,7 +19,9 @@ a:focus {
 h2, h4 {
     margin: 0;
 }
-
+.media-body > article > ul {
+    list-style-type: disc;
+}
 a.list-group-item.actived {
     background: rgb(34, 43, 54);
     color: white;
