@@ -29,7 +29,7 @@ func GetBlogOwner() (BlogOwner, error) {
 	err = utils.GetDataFromCache("blogowner", &owner)
 	if err != nil {
 		logger.Warn(err.Error())
-		owner := BlogOwner{Id: "1"}
+		owner = BlogOwner{Id: "1"}
 		o := orm.NewOrm()
 		err = o.Read(&owner)
 		if err != nil {
