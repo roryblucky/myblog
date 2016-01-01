@@ -1,3 +1,7 @@
+<style type="text/css" scoped="scoped">
+    @import "/static/admin/vendor/thinker-md/dist/stylesheets/thinker-md.user.css";
+    @import "/static/admin/vendor/thinker-md/dist/stylesheets/thinker-md.vendor.css";
+</style>
 <div class="panel-heading"><h1 class="page-header">新增/更新文章</h1></div>
 <form class="form-horizontal" style="width: 50%">
     <div class="form-group">
@@ -19,9 +23,8 @@
     <div class="form-group">
         <label for="content" class="col-sm-2 control-label">内容:</label>
         <div class="col-md-10">
-            <div class="md-editor">
-                <textarea id="content" class="form-control"></textarea>
-            </div>
+            <textarea ng-model="article.content" id="content" name="content" data-provide="markdown" rows="10"
+                      placeholder="这里输入内容,支持Markdown语法."></textarea>
         </div>
     </div>
     <div class="form-group">
@@ -34,6 +37,3 @@
         </div>
     </div>
 </form>
-<script type="text/javascript">
-
-</script>

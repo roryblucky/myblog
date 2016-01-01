@@ -6,6 +6,8 @@ blogMain.controller("UpdateArticleController", UpdateArticleController);
 UpdateArticleController.$inject = ['$scope', '$window', '$routeParams', 'ArticleRestService', 'CategoryRestService'];
 
 function UpdateArticleController($scope, $window, $routeParams, ArticleRestService, CategoryRestService) {
+
+    $scope.$on('$viewContentLoaded', configMarkdown);
     CategoryRestService.getCategories().then(
         function (result) {
             $scope.categories = result.data.data;
