@@ -61,11 +61,7 @@ func (c *MainController) ShowArticle() {
 
 	article, err := models.GetArticleById(id)
 	if err != nil {
-		//TODO redirect to 404 page
-		errorResult := models.MessageResult{Code: http.StatusNotFound, Msg: "Result cannot be found"}
-		c.Data["json"] = &errorResult
-		c.ServeJson()
-		return
+		c.Abort(strconv.Itoa(http.StatusNotFound))
 	}
 	c.Data["article"] = &article
 
