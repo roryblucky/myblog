@@ -17,10 +17,16 @@ func (c *BlowOwnerController) Post() {
 
 	intro := c.Input().Get("introduction")
 
-	blowOwner := models.BlogOwner{Introduction: intro}
-	if !utils.IsEmpty(fullPath) {
-		blowOwner.ImageIconPath = fullPath
+	if utils.IsEmpty(intro) && utils.IsEmpty(fullPath) {
+		errorResult := models.MessageResult{Code: http.StatusBadRequest, Msg: "Missing parameter"}
+		c.Data["json"] = &errorResult
+		c.Ctx.Output.SetStatus(http.StatusBadRequest)
+		c.ServeJson()
+		return
 	}
+
+	blowOwner := models.BlogOwner{Introduction: intro, ImageIconPath: fullPath}
+
 	err := models.UpdateBlogOwner(blowOwner)
 	if err != nil {
 		errorResult := models.MessageResult{Code: http.StatusInternalServerError, Msg: "Update BlogOwner info failed"}

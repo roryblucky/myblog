@@ -46,8 +46,12 @@ func UpdateBlogOwner(b BlogOwner) error {
 	o := orm.NewOrm()
 	owner := BlogOwner{Id: "1"}
 	if o.Read(&owner) == nil {
-		owner.ImageIconPath = b.ImageIconPath
-		owner.Introduction = b.Introduction
+		if !utils.IsEmpty(b.ImageIconPath) {
+			owner.ImageIconPath = b.ImageIconPath
+		}
+		if !utils.IsEmpty(b.Introduction) {
+			owner.Introduction = b.Introduction
+		}
 		_, err := o.Update(&owner)
 		return err
 	}
