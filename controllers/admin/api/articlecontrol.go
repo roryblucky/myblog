@@ -142,6 +142,7 @@ func (c *ArticleController) GetArticles() {
 	}
 	dataResult := models.DataResult{
 		Code:        http.StatusOK,
+		TotalPages:  totalPages,
 		NextPage:    fmt.Sprintf("/page/%d", pageNum+1),
 		HasNextPage: hasNextPage,
 		PrevPage:    fmt.Sprintf("/page/%d", pageNum-1),

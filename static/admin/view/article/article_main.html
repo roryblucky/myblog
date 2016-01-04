@@ -28,4 +28,21 @@
         </tr>
         </tbody>
     </table>
+    <nav class="pull-right">
+        <ul class="pagination">
+            <li ng-class="{'disabled': !hasPrev}">
+                <a ng-href="/admin/article/page/{{currentPage - 1}}" aria-label="Previous" >
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li ng-class="{'active':$index + 1 == currentPage}" ng-repeat="n in [] | range: totalPages">
+                <a  ng-href="/admin/article/page/{{$index + 1}}" ng-bind="$index + 1"></a>
+            </li>
+            <li ng-class="{'disabled': !hasNext}">
+                <a ng-href="/admin/article/page/{{currentPage + 1}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>

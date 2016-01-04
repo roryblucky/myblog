@@ -18,7 +18,7 @@
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 ">
                 <div class="list-group">
-                    <a href="#" class="list-group-item actived">主页</a>
+                    <a href="/" class="list-group-item actived">主页</a>
                     <a href="#" class="list-group-item">简历</a>
                     <a href="https://github.com/roryblucky" target="_blank" class="list-group-item">Github</a>
                     <a href="#" class="list-group-item">联系我</a>
@@ -54,7 +54,7 @@
 
                 <nav>
                     <ul class="pager">
-                        <li><a href="#"><< 上一页</a></li><li><a href="#">下一页 >></a></li>
+                        <li><a {{{if .hasPrevPage}}} href=" {{{.prev_page}}} " {{{end}}}><< 上一页</a></li><li><a {{{if .hasNextPage}}} href="{{{.next_page}}}" {{{end}}}>下一页 >></a></li>
                     </ul>
                 </nav>
             </main>
@@ -67,11 +67,9 @@
                 <div class="panel-body">
                     <div class="row">
                         {{{with .blogOwner}}}
-                        <!--TODO relative path-->
-                        <img src="/static/js/img/header.png" class="col-sm-4 col-md-4 hidden-xs"/>
+                        <img src="{{{.ImageIconPath}}}" class="col-sm-4 col-md-4 hidden-xs"/>
 
                         <p class="col-xs-12 col-sm-8 col-md-8">
-
                                 {{{.Introduction}}}
                         {{{end}}}
                         </p>
@@ -84,10 +82,11 @@
                 </div>
                 <div class="panel-body">
                     <ul class="category">
-                        <li><a href="/category/aaa/articles">General</a></li>
-                        <li><a href="#">General</a></li>
-                        <li><a href="#">General</a></li>
-                        <li><a href="#">General</a></li>
+                        {{{range .categories}}}
+                            {{{with .}}}
+                                <li><a href="/category/{{{.Id}}}/articles">{{{.Name}}}</a></li>
+                            {{{end}}}
+                        {{{end}}}
                     </ul>
                 </div>
             </div>

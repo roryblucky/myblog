@@ -7,6 +7,7 @@ type MessageResult struct {
 
 type DataResult struct {
 	Code        int         `json:"code"`
+	TotalPages  int         `json:"totalPages"`
 	NextPage    string      `json:"nextPage"`
 	HasNextPage bool        `json:"hasNextPage"`
 	PrevPage    string      `json:"prevPage"`

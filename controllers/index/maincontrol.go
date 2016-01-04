@@ -19,7 +19,7 @@ func (c *MainController) Get() {
 	pageNum, err := strconv.Atoi(pageNumStr)
 	if err != nil {
 		logger.Warn("PageNum not correct, using default")
-		pageNum = 0
+		pageNum = 1
 	}
 	categoryId := c.Ctx.Input.Param(":categoryid")
 

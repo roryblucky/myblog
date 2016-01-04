@@ -4,11 +4,19 @@
 
 blogMain.controller('ArticleController', ArticleController);
 
-ArticleController.$inject = ['$scope', '$uibModal', 'ArticleRestService', 'AlertService'];
+ArticleController.$inject = ['$scope', '$uibModal', '$routeParams','ArticleRestService', 'AlertService'];
 
-function ArticleController($scope, $uibModal, ArticleRestService, AlertService) {
-    ArticleRestService.getArticles(1).then(function (result) {
+function ArticleController($scope, $uibModal, $routeParams, ArticleRestService, AlertService) {
+    var num = $routeParams.num;
+    if (num == undefined) {
+        num = 1;
+    }
+    ArticleRestService.getArticles(num).then(function (result) {
         $scope.articles = result.data.data;
+        $scope.totalPages = result.data.totalPages;
+        $scope.hasPrev = result.data.hasPrePage;
+        $scope.hasNext = result.data.hasNextPage;
+        $scope.currentPage = parseInt(num);
     });
 
     $scope.openDelDialog = function ($index) {

@@ -11,7 +11,6 @@ _test
 .idea
 static/admin/node_modules
 static/admin/bower_components
-upload
 # Architecture specific extensions/prefixes
 *.[568vq]
 [568vq].out

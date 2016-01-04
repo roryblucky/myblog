@@ -21,6 +21,10 @@ blogMain.config(['$routeProvider', '$locationProvider', function ($routeProvider
             templateUrl: '/static/admin/view/blogowner/blogonwer_info.html',
             controller:'BlogUploadController'
         })
+        .when('/admin/article/page/:num', {
+            templateUrl: '/static/admin/view/article/article_main.html',
+            controller: 'ArticleController'
+        })
         .otherwise({
             redirectTo: '/admin/article'
         });
@@ -36,4 +40,15 @@ blogMain.controller('DelDialogController', function ($scope, $uibModalInstance) 
     $scope.cancel = function () {
         $uibModalInstance.dismiss();
     };
+});
+
+blogMain.filter('range', function() {
+   return function(input, total) {
+       total = parseInt(total);
+       for (var i=0; i<total; i++) {
+           input.push(i);
+       }
+
+       return input;
+   }
 });

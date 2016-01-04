@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-{{{with .article}}}
 <head>
-    <title>{{{.Title}}}</title>
+    <title>{{{.article.Title}}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="http://cdn.staticfile.org/twitter-bootstrap/3.3.6/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/static/css/main.css">
@@ -33,11 +32,11 @@
         <div id="primary" class="col-xs-8 col-sm-8 col-md-8 ">
             <main id="main" role="main">
                 <div class="title">
-                    <h2>{{{.Title}}}</h2>
+                    <h2>{{{.article.Title}}}</h2>
                 </div>
-                <p class="postDate">发布于{{{blogDateFormat .PostDate}}}</p>
-                <article id="article-{{{.Id}}}">
-                    <script>convertArticle2HTML({{{.Id}}}, {{{.Content}}})</script>
+                <p class="postDate">发布于{{{blogDateFormat .article.PostDate}}}</p>
+                <article id="article-{{{.article.Id}}}">
+                    <script>convertArticle2HTML({{{.article.Id}}}, {{{.article.Content}}})</script>
                 </article>
             </main>
         </div>
@@ -48,12 +47,12 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <img src="../static/js/img/header.png" class="col-sm-4 col-md-4 hidden-xs"/>
+                        {{{with .blogOwner}}}
+                        <img src="{{{.ImageIconPath}}}" class="col-sm-4 col-md-4 hidden-xs"/>
 
                         <p class="col-xs-12 col-sm-8 col-md-8">
-                            这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍
-                            这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍这是自我介绍
-                        </p>
+                        {{{.Introduction}}}
+                        {{{end}}}
                     </div>
                 </div>
             </div>
@@ -63,10 +62,11 @@
                 </div>
                 <div class="panel-body">
                     <ul class="category">
-                        <li><a href="#">General</a></li>
-                        <li><a href="#">General</a></li>
-                        <li><a href="#">General</a></li>
-                        <li><a href="#">General</a></li>
+                        {{{range .categories}}}
+                            {{{with .}}}
+                                <li><a href="/category/{{{.Id}}}/articles">{{{.Name}}}</a></li>
+                            {{{end}}}
+                        {{{end}}}
                     </ul>
                 </div>
             </div>
@@ -80,4 +80,3 @@
 </footer>
 </body>
 </html>
-{{{end}}}
