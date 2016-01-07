@@ -1,0 +1,1 @@
+.main,.sidebar{padding:20px}.alert{position:absolute;right:10px;top:60px;text-align:center;width:300px}.cssFade{transition:.5s linear all;opacity:1}.cssFade.ng-hide{opacity:0}.sidebar{position:fixed;top:51px;bottom:0;left:0;z-index:1000;display:block;overflow-x:hidden;overflow-y:auto;background-color:#f5f5f5;border-right:1px solid #eee}.error-msg{color:red}

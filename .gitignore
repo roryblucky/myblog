@@ -9,8 +9,8 @@
 _obj
 _test
 .idea
-static/admin/node_modules
-static/admin/bower_components
+node_modules
+bower_components
 # Architecture specific extensions/prefixes
 *.[568vq]
 [568vq].out

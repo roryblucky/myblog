@@ -6,7 +6,6 @@ function convertArticle2HTML(id, data) {
 }
 
 function subContent(data, leng) {
-    console.log(data.length);
     if (data.length == leng || data.length < leng) {
         return data;
     }
