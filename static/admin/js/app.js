@@ -32,7 +32,7 @@ blogMain.config(['$routeProvider', '$locationProvider', function ($routeProvider
 }]);
 
 //del dialog controller
-blogMain.controller('DelDialogController', function ($scope, $uibModalInstance) {
+blogMain.controller('DelDialogController', ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
     $scope.ok = function () {
         $uibModalInstance.close();
     };
@@ -40,7 +40,7 @@ blogMain.controller('DelDialogController', function ($scope, $uibModalInstance) 
     $scope.cancel = function () {
         $uibModalInstance.dismiss();
     };
-});
+}]);
 
 blogMain.filter('range', function() {
    return function(input, total) {
