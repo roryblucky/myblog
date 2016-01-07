@@ -69,6 +69,8 @@ a.list-group-item.actived {
     -moz-box-shadow: #666 0px 0px 10px;
     box-shadow: #666 0px 0px 10px;
     color: black;
+}
+.primary-article {
     min-height: 432px;
 }
 
