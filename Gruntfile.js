@@ -24,14 +24,21 @@ module.exports = function(grunt) {
           'static/css/main.min.css':['static/css/main.css']
         }
       }
+    },
+    watch: {
+      scripts: {
+        files:['static/**/*.js'],
+        tasks:['uglify']
+      }
     }
   });
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task.
-  grunt.registerTask('default', ['cssmin', 'uglify']);
+  grunt.registerTask('default', ['cssmin', 'uglify', 'watch']);
 
 };

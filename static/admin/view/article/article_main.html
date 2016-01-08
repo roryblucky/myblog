@@ -31,17 +31,19 @@
     <nav class="pull-right">
         <ul class="pagination">
             <li ng-class="{'disabled': !hasPrev}">
-                <a ng-href="/admin/article/page/{{currentPage - 1}}" aria-label="Previous" >
+                <a ng-href="/admin/article/page/{{currentPage - 1}}" aria-label="Previous" ng-if="hasPrev">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
+                <span aria-hidden="true" ng-if="!hasPrev">&laquo;</span>
             </li>
             <li ng-class="{'active':$index + 1 == currentPage}" ng-repeat="n in [] | range: totalPages">
                 <a  ng-href="/admin/article/page/{{$index + 1}}" ng-bind="$index + 1"></a>
             </li>
             <li ng-class="{'disabled': !hasNext}">
-                <a ng-href="/admin/article/page/{{currentPage + 1}}" aria-label="Next">
+                <a ng-href="/admin/article/page/{{currentPage + 1}}" aria-label="Next" ng-if="hasNext">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
+                <span aria-hidden="true" ng-if="!hasNext">&raquo;</span>
             </li>
         </ul>
     </nav>

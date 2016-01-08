@@ -109,9 +109,11 @@ func GetArticlesByCondition(pageNum, pageSize int, condition interface{}) (bool,
 		totalRecords = 0
 	}
 	// 计算总共有多少页
-	totalPages := totalRecords % pageSize
-	if totalPages != 0 {
-		totalRecords += 1
+	totalPages := totalRecords / pageSize
+	if totalPages == 0 {
+		totalPages = 1
+	} else if totalPages != 0 {
+		totalPages += 1
 	}
 
 	// 是否有下一页

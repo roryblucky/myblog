@@ -4,9 +4,9 @@
 
 blogMain.controller('ArticleController', ArticleController);
 
-ArticleController.$inject = ['$scope', '$uibModal', '$routeParams','ArticleRestService', 'AlertService'];
+ArticleController.$inject = ['$scope', '$window', '$uibModal', '$routeParams','ArticleRestService', 'AlertService'];
 
-function ArticleController($scope, $uibModal, $routeParams, ArticleRestService, AlertService) {
+function ArticleController($scope, $window, $uibModal, $routeParams, ArticleRestService, AlertService) {
     var num = $routeParams.num;
     if (num == undefined) {
         num = 1;
@@ -27,7 +27,7 @@ function ArticleController($scope, $uibModal, $routeParams, ArticleRestService, 
 
         modalInstance.result.then(function () {
             ArticleRestService.delArticle($scope.articles[$index]).then(function () {
-                $scope.articles.splice($index, 1);
+                $window.location.href = '/admin/article';
             }, function () {
                 AlertService.showAlert();
             });
