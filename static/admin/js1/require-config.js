@@ -8,7 +8,7 @@ require.config({
         'angularBootstrap': 'bower_components/angular-bootstrap/ui-bootstrap-tpls.min',
         'angularUIRouter': 'bower_components/angular-ui-router/release/angular-ui-router.min',
         'ngFileUpload': 'bower_components/ng-file-upload/ng-file-upload.min',
-        'domReady': 'bower_components/domReady/domReady.min'
+        'domReady': 'bower_components/domReady/domReady'
     },
     shim: {
         'angular': {
