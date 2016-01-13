@@ -2,7 +2,8 @@
     <div class="panel-heading"><h1 class="page-header">文章管理</h1></div>
     <div>
         <ul class="list-inline pull-right">
-            <li><a class="btn btn-success" href="/admin/article/add">新增</a></li>
+            <!--<li><a class="btn btn-success" href="/admin/article/add">新增</a></li>-->
+            <li><a class="btn btn-success" ui-sref="updateArticle({op:'add'})">新增</a></li>
         </ul>
     </div>
     <table class="table table-responsive">
@@ -22,25 +23,45 @@
             <td>
                 <ul class="list-inline">
                     <li><a href="javascript:void(0);" ng-click="openDelDialog($index)">删除</a></li>
-                    <li><a ng-href="/admin/article/update?id={{article.id}}">编辑</a></li>
+                    <!--<li><a ng-href="/admin/article/update?id={{article.id}}">编辑</a></li>-->
+                    <li><a ui-sref="updateArticle({op:'update',id:'{{article.id}}'})">编辑</a></li>
                 </ul>
             </td>
         </tr>
         </tbody>
     </table>
+    <!--<nav class="pull-right">-->
+        <!--<ul class="pagination">-->
+            <!--<li ng-class="{'disabled': !hasPrev}">-->
+                <!--<a ng-href="/admin/article/page/{{currentPage - 1}}" aria-label="Previous" ng-if="hasPrev">-->
+                    <!--<span aria-hidden="true">&laquo;</span>-->
+                <!--</a>-->
+                <!--<span aria-hidden="true" ng-if="!hasPrev">&laquo;</span>-->
+            <!--</li>-->
+            <!--<li ng-class="{'active':$index + 1 == currentPage}" ng-repeat="n in [] | range: totalPages">-->
+                <!--<a  ng-href="/admin/article/page/{{$index + 1}}" ng-bind="$index + 1"></a>-->
+            <!--</li>-->
+            <!--<li ng-class="{'disabled': !hasNext}">-->
+                <!--<a ng-href="/admin/article/page/{{currentPage + 1}}" aria-label="Next" ng-if="hasNext">-->
+                    <!--<span aria-hidden="true">&raquo;</span>-->
+                <!--</a>-->
+                <!--<span aria-hidden="true" ng-if="!hasNext">&raquo;</span>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</nav>-->
     <nav class="pull-right">
         <ul class="pagination">
             <li ng-class="{'disabled': !hasPrev}">
-                <a ng-href="/admin/article/page/{{currentPage - 1}}" aria-label="Previous" ng-if="hasPrev">
+                <a ui-sref="articlepage({num:'{{currentPage - 1}}'})" aria-label="Previous" ng-if="hasPrev">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
                 <span aria-hidden="true" ng-if="!hasPrev">&laquo;</span>
             </li>
             <li ng-class="{'active':$index + 1 == currentPage}" ng-repeat="n in [] | range: totalPages">
-                <a  ng-href="/admin/article/page/{{$index + 1}}" ng-bind="$index + 1"></a>
+                <a  ui-sref="articlepage({num:'{{$index + 1}}'})" ng-bind="$index + 1"></a>
             </li>
             <li ng-class="{'disabled': !hasNext}">
-                <a ng-href="/admin/article/page/{{currentPage + 1}}" aria-label="Next" ng-if="hasNext">
+                <a ui-sref="articlepage({num:'{{currentPage + 1}}'})" aria-label="Next" ng-if="hasNext">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
                 <span aria-hidden="true" ng-if="!hasNext">&raquo;</span>
