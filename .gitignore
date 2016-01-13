@@ -10,7 +10,6 @@ _obj
 _test
 .idea
 node_modules
-bower_components
 # Architecture specific extensions/prefixes
 *.[568vq]
 [568vq].out
