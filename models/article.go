@@ -84,7 +84,7 @@ func GetArticlesByCondition(pageNum, pageSize int, condition interface{}) (bool,
 	}
 
 	if pageSize < 1 {
-		pageSize = 5
+		pageSize = 6
 	}
 	var articles []Article
 	// 根据分类获取所有的文章
@@ -110,7 +110,7 @@ func GetArticlesByCondition(pageNum, pageSize int, condition interface{}) (bool,
 	}
 	// 计算总共有多少页
 	totalPages := totalRecords / pageSize
-	if totalPages == 0 {
+	if totalPages == 0 || totalPages%pageSize == 0 {
 		totalPages = 1
 	} else if totalPages != 0 {
 		totalPages += 1
