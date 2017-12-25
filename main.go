@@ -10,5 +10,6 @@ import (
 func main() {
 	beego.AddFuncMap("blogDateFormat", utils.DateFormat)
 	beego.ErrorController(&controllers.ErrorController{})
+	//tes tag
 	beego.Run()
 }
